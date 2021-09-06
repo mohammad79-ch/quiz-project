@@ -13,12 +13,12 @@ class Question extends Model
 
     public function subQuestion()
     {
-        return $this->hasMany(SubQuestion::class,'question_id');
+        return $this->hasMany(SubQuestion::class);
     }
 
     public function user()
     {
-        return $this->hasMany(User::class,'person_id');
+        return $this->belongsTo(User::class,'person_id');
     }
 
 
