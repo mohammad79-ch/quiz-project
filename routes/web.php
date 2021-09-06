@@ -18,7 +18,10 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/dashboard',[DashboardController::class,'index']);
+Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
+    Route::get('/',[DashboardController::class,'index']);
+    Route::resource('/questions',\App\Http\Controllers\QuestionController::class);
+});
 
 Auth::routes();
 
