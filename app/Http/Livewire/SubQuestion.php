@@ -8,13 +8,12 @@ class SubQuestion extends Component
 {
     public $question ;
 
-    public $clicked = false;
 
+    public $clicked = false;
 
     public function checkAnswer($subQuestion)
     {
        $sub = $this->question->subQuestion()->whereId($subQuestion)->first();
-        if ($sub->users()->count()) return;
         if ($sub->is_answer){
             $this->clicked = true;
             $sub->users()->sync(auth()->id());
