@@ -16,24 +16,14 @@
             <div class="col-md-4">
                 <div class="alert alert-warning">Rate</div>
             </div>
-
-
-            <div class="col-md-12 mb-5">
-                <h2 class="text-success offset-md-4">title</h2>
-                <div class="col-md-4 offset-md-4 bg-danger">SubQuestion</div>
-            </div>
-            <div class="col-md-12 mb-5">
-                <h2 class="text-success offset-md-4">title</h2>
-                <div class="col-md-4 offset-md-4 bg-danger">SubQuestion</div>
-            </div>
-            <div class="col-md-12 mb-5">
-                <h2 class="text-success offset-md-4">title</h2>
-                <div class="col-md-4 offset-md-4 bg-danger">SubQuestion</div>
-            </div>
-            <div class="col-md-12 mb-5">
-                <h2 class="text-success offset-md-4">title</h2>
-                <div class="col-md-4 offset-md-4 bg-danger">SubQuestion</div>
-            </div>
+                @foreach($questions as $question)
+                <div class="col-md-12 mb-5">
+                    <h2 class="text-success offset-md-4">{{$question->title}}</h2>
+                    @foreach($question->subQuestion as $sub)
+                        <div class="col-md-4 offset-md-4 mt-3 alert alert-success  btn-outline-success">{{$sub->title}}</div>
+                    @endforeach
+                </div>
+                @endforeach
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\SubQuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/',[IndexController::class,'index']);
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
