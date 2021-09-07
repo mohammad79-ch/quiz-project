@@ -17,10 +17,12 @@ class SubQuestionController extends Controller
     {
         $data = $request->validate([
            'title'=>['required'],
-           'is_answer' => ['nullable']
         ]);
 
-        $question->SubQuestion()->create($data);
+        $question->SubQuestion()->create([
+            'title'=>$data['title'],
+            'is_answer' => $request->has('is_answer')
+        ]);
 
         return redirect()->route('questions.index');
     }
@@ -34,7 +36,6 @@ class SubQuestionController extends Controller
     {
         $data = $request->validate([
             'title'=>['required'],
-            'is_answer' => ['nullable']
         ]);
 
         $subQuestion->update([

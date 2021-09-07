@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $questions = Question::with('subQuestion')->get();
+        $questions = Question::with('subQuestion.users')->get();
         return view('index',compact('questions'));
     }
 }

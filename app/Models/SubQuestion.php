@@ -18,7 +18,7 @@ class SubQuestion extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class,'sub_question_user');
+        return $this->belongsToMany(User::class,'sub_question_user')->withTimestamps();
     }
 
 }
