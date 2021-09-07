@@ -48,11 +48,11 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active has-sub">
-                        <a class="js-arrow" href="{{route('questions.index')}}">
-                            <i class="fas fa-tachometer-alt"></i>Question</a>
+                        <a class="js-arrow" href="{{route('admin.dashboard')}}">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="index.html">Dashboard 1</a>
+                                <a href="{{route('questions.index')}}">Question</a>
                             </li>
                         </ul>
                     </li>

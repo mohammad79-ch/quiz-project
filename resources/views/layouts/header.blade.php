@@ -126,6 +126,16 @@
 <!-- Hero Section
 ================================================== -->
 
+       <div class="d-flex justify-content-between" style="padding:50px ;padding:50px;display: flex;background: mediumpurple;">
+           @guest
+           <div><a class="btn btn-success" href="{{route('register')}}" >ورود / ثبت نام</a></div>
+               <div><strong>مهمان</strong></div>
+            @endguest
+           @auth
+           <div><a href="" class="text-white">Name : {{auth()->user()->name}}</a></div>
+           <div><a href="{{route('admin.dashboard')}}" class="text-white">Dashboard</a></div>
+            @endauth
+       </div>
 <header class="jumbotron bg-inverse text-xs-center center-vertically" role="banner">
     <div class="container">
         <h1 class="display-3">Land.io, blissful innovation.</h1>
