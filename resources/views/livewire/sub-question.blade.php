@@ -7,17 +7,15 @@
         $checkIfExist = $question->users->filter(function ($item){
             return $item->id == auth()->id() && $item->pivot->is_correct == 1 || $item->pivot->is_correct == 0;
         });
-        
+
         @endphp
 
-
-
-        <a style="cursor: pointer" @if(!count($checkIfExist)) wire:click.prevent="checkAnswer('{{$sub->id}}')" @endif>
+        <a style="cursor: pointer" @if(!$checkF) wire:click.prevent="checkAnswer('{{$sub->id}}')" @endif>
             <div class="col-md-4 justify-content-between d-flex offset-md-4 mt-3 alert alert-secondary  btn-outline-success">
                 <div>{{$sub->title}}</div>
-                @if(count($checkIfExist) && $sub->is_answer)
+                @if($checkF && $sub->is_answer)
                     <div>✓</div>
-                @elseif($clicked)
+                @elseif($checkF &&  !$sub->answer)
                     <div><strong >&#9888</strong></div>
                 @endif
             </div>
