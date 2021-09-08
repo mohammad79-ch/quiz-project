@@ -9,16 +9,16 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','rate','level','person_id'];
+    protected $fillable = ['title','rate','level','user_id'];
 
     public function subQuestion()
     {
         return $this->hasMany(SubQuestion::class);
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class,'person_id');
+        return $this->belongsToMany(User::class,'question_user')->withPivot('is_correct');
     }
 
 

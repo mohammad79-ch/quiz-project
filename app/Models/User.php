@@ -12,10 +12,16 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $guarded = [];
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->belongsToMany(Question::class,'question_user')->withPivot('is_correct');
+    }
+
+    public function subQuestions()
+    {
+        return $this->belongsToMany(SubQuestion::class,'sub_question_user');
     }
     /**
      * The attributes that are mass assignable.

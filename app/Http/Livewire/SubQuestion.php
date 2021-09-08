@@ -8,15 +8,24 @@ class SubQuestion extends Component
 {
     public $question ;
 
+    protected $listeners = ['subQuestion'=> '$refresh'];
+
 
     public $clicked = false;
 
+
+
     public function checkAnswer($subQuestion)
     {
-       $sub = $this->question->subQuestion()->whereId($subQuestion)->first();
+       $sub = \App\Models\SubQuestion::where('id',$subQuestion)->first();
         if ($sub->is_answer){
             $this->clicked = true;
-            $sub->users()->sync(auth()->id());
+            $this->question->users()->attach(auth()->id(),['is_correct'=>1]);
+
+        }else{
+            $this->clicked = true;
+
+            $this->question->users()->attach(auth()->id(),['is_correct'=>0]);
         }
     }
 

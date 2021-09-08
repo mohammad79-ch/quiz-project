@@ -19,13 +19,26 @@ class CreateQuestionsTable extends Migration
             $table->integer('rate')->default(0);
             $table->enum('level',['easy','normal','hard']);
 
-
-            $table->unsignedBigInteger('person_id');
-            $table->foreign('person_id')->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('question_user', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')
+                ->on('questions')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+
+            $table->timestamps();
+        });
+
+
     }
 
     /**

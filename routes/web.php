@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[IndexController::class,'index']);
+Route::get('/log',fn() => auth()->logout());
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
