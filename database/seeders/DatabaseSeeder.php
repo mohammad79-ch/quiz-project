@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-//        Question::factory(2)->create();
+        Question::factory(1)->create();
         SubQuestion::factory(4)->create();
     }
 }

@@ -24,7 +24,7 @@ class SubQuestionFactory extends Factory
     {
         return [
             'title' =>$this->faker->words(3,true),
-            'question_id'=> Question::find(1)->id,
+            'question_id'=> Question::find(3)->id,
             'is_answer' => 0
         ];
     }

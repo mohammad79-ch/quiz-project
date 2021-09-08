@@ -9,16 +9,15 @@
             <div class="col-md-4">
                 <div class="alert alert-primary">Question</div>
             </div>
-            <div class="col-md-4">
-                <div class="alert alert-secondary">Level</div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="alert alert-warning">Rate</div>
-            </div>
+            @auth
                 @foreach($questions as $question)
-                @livewire('sub-question',['question'=>$question])
+                    @livewire('sub-question',['question'=>$question])
                 @endforeach
+            @endauth
+
+            @guest
+                <a href="{{route('register')}}" class="btn btn-warning"> At first Login/Register in website</a>
+            @endif
         </div>
     </div>
 

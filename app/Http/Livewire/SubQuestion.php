@@ -8,9 +8,11 @@ class SubQuestion extends Component
 {
     public $question ;
 
-    public bool $checkF = false;
+    public bool $checkQuestion = false;
 
     protected $listeners = ['subQuestion'=> '$refresh'];
+
+    public $level ;
 
 
     public bool $clicked = false;
@@ -18,11 +20,11 @@ class SubQuestion extends Component
     public function mount()
     {
         $checkIfExist = $this->question->users->filter(function ($item){
-            return $item->id == auth()->id() && $item->pivot->is_correct == 1 || $item->pivot->is_correct == 0;
+            return $item->id == auth()->id() && ($item->pivot->is_correct == 1 || $item->pivot->is_correct == 0);
         });
 
         if (count($checkIfExist)){
-            $this->checkF = true;
+            $this->checkQuestion = true;
         }
 
     }
@@ -31,20 +33,29 @@ class SubQuestion extends Component
     {
        $sub = \App\Models\SubQuestion::where('id',$subQuestion)->first();
         if ($sub->is_answer){
-            $this->checkF = true;
+            $this->checkQuestion = true;
             $this->clicked = true;
             $this->question->users()->attach(auth()->id(),['is_correct'=>1]);
 
         }else{
-            $this->checkF=true;
-            $this->clicked = true;
-
+            $this->checkQuestion=true;
             $this->question->users()->attach(auth()->id(),['is_correct'=>0]);
         }
     }
 
     public function render()
     {
+        if ($this->level == 'easy'){
+
+            $this->question->level-=1;
+            $this->question->save();
+
+        }elseif ($this->level == 'hard'){
+            $this->question->level+=1;
+            $this->question->save();
+        }
+
+
         return view('livewire.sub-question');
     }
 }
