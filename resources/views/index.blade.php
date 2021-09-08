@@ -6,8 +6,8 @@
 
     <div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="alert alert-primary">Question</div>
+            <div class="col-md-12">
+                <div class="alert alert-primary col-4 offset-md-4">Question</div>
             </div>
             @auth
                 @foreach($questions as $question)
