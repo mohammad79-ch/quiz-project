@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class,'question_user')->withPivot('is_correct');
+        return $this->belongsToMany(Question::class,'question_user')->withPivot(['is_correct','select_level']);
     }
 
     public function subQuestions()

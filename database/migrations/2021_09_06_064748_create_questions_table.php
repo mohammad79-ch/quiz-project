@@ -17,13 +17,14 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('rate')->default(0);
-            $table->enum('level',['easy','normal','hard']);
+            $table->integer('level')->default(0);
 
             $table->timestamps();
         });
 
         Schema::create('question_user', function (Blueprint $table) {
 
+            $table->boolean('select_level')->default(0);
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')
                 ->on('questions')
