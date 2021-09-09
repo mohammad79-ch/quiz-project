@@ -91,7 +91,7 @@ class SubQuestion extends Component
 
         }
         elseif ($this->level == 'easy' || $this->level == 'hard'){
-            echo "<script>alert('At first select answer')</script>";
+           session()->flash("msg{$this->question->id}",'At first choose the answer');
         }
 
 

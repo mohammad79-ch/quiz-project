@@ -2,12 +2,12 @@
     <h3 style="font-size: 16px" class="text-success offset-md-4">{{$question->title}}</h3>
     <div class="d-flex col-4 offset-md-4 mt-4 justify-content-around">
         @if(!$selectEasy && !$selectHard)
-            <div><span style="border-radius: 15px" class="bg-danger p-2 mt-3">Level</span>
+            <div><span style="border-radius: 15px" class="bg-primary p-2 mt-3">Level</span>
                 <input type="radio" name="level" wire:model="level" value="easy"> easy
                 <input type="radio" name="level" wire:model="level" value="hard"> hard
             </div>
         @endif
-        <div class="ml-2"><span style="border-radius: 15px" class="bg-warning p-2 ">Rate</span>
+        <div class="ml-2"><span >User Rate : </span>
 
             @php
                 $selectHardForRate = $question->users->filter(function ($item){
@@ -26,6 +26,15 @@
         </div>
     </div>
     @foreach($question->subQuestion as $sub)
+
+        @if(session()->has("msg$question->id"))
+        <div class="col-md-4 offset-md-4">
+            <p class="bg-danger p-2 mt-3" style="border-radius: 15px" >{{session("msg$question->id")}}</p>
+        </div>
+            @php
+                session()->forget("msg$question->id")
+            @endphp
+        @endif
         @php
 
             $checkIfExist = [];
