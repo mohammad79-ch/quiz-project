@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\SubQuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
 Route::get('/',[IndexController::class,'index']);
 Route::get('/log',fn() => auth()->logout());
