@@ -10,19 +10,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    protected $guarded = [];
-
-    public function questions()
-    {
-        return $this->belongsToMany(Question::class,'question_user')->withPivot(['is_correct','select_level']);
-    }
-
-    public function subQuestions()
-    {
-        return $this->belongsToMany(SubQuestion::class,'sub_question_user');
-    }
     /**
      * The attributes that are mass assignable.
      *
@@ -33,8 +20,23 @@ class User extends Authenticatable
         'email',
         'password',
         'image',
-        'is_admin'
-        ];
+        'is_admin',
+        'profile'
+
+    ];
+    use HasApiTokens, HasFactory, Notifiable;
+
+
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class,'question_user')->withPivot(['is_correct','select_level']);
+    }
+
+    public function subQuestions()
+    {
+        return $this->belongsToMany(SubQuestion::class,'sub_question_user');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

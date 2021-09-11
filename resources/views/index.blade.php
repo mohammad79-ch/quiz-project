@@ -10,7 +10,7 @@
                             @foreach($users as $user)
                             <div class="col-12 d-flex justify-content-between" style="height: auto">
                                  <div><span class="font-weight-bold">
-                                         {{$user['name']}}
+                                         <a href="{{route('profile',['profile'=>$user['profile']])}}">{{$user['name']}}</a>
                                      </span></div>
                                 <div class="d-flex">
                                     <span style="border-radius: 15px;padding: 7px;" class=" ml-2 bg-success">
