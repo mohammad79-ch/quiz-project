@@ -6,12 +6,11 @@
     <div class="container">
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
-
-                        @foreach($questions as $question)
-                            @foreach($question->users as $user)
-                              <div class="col-12 d-flex justify-content-between" style="height: auto">
+                <h4 class="mb-5">10 top users to answer the questions</h4>
+                            @foreach(collect($users)->unique('name')->all() as $user)
+                            <div class="col-12 d-flex justify-content-between" style="height: auto">
                                  <div><span class="font-weight-bold">
-                                         {{$user->name}}
+                                         {{$user['name']}}
                                      </span></div>
                                 <div class="d-flex">
                                     <span style="border-radius: 15px;padding: 7px;" class=" ml-2 bg-success">
@@ -39,7 +38,6 @@
                               </div>
                                 <hr>
                             @endforeach
-                        @endforeach
                     </div>
             <div class="alert alert-primary col-md-7 offset-1 "><p class="mb-2 font-weight-bold">Question</p>
                 @auth
