@@ -38,6 +38,24 @@ class User extends Authenticatable
         return $this->belongsToMany(SubQuestion::class,'sub_question_user');
     }
 
+    public function TotalAnswer()
+    {
+        return $this->questions->count();
+    }
+
+    public function getCorrectAnswer()
+    {
+        $correctCount = $this->questions->filter(fn($q) => $q->pivot->is_correct)->count();
+
+        return $correctCount;
+    }
+
+    public function getWrongAnswer()
+    {
+        $correctCount = $this->questions->filter(fn($q) => !$q->pivot->is_correct)->count();
+
+        return $correctCount;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
