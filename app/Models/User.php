@@ -21,7 +21,8 @@ class User extends Authenticatable
         'password',
         'image',
         'is_admin',
-        'profile'
+        'profile',
+        'aboutMe'
 
     ];
     use HasApiTokens, HasFactory, Notifiable;
