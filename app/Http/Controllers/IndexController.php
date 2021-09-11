@@ -32,7 +32,7 @@ class IndexController extends Controller
 
         return view('index',compact('questions','users'));
     }
-    
+
     public function paginate($items, $perPage = 10, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
