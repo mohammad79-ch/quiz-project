@@ -18,7 +18,8 @@ class Question extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class,'question_user')->withPivot(['select_level','is_correct']);
+        return $this->belongsToMany(User::class,'question_user')
+            ->withPivot(['select_level','is_correct']);
     }
 
 
