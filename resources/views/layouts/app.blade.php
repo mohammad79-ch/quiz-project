@@ -2,4 +2,6 @@
 
 @yield('section')
 
+
+
 @include('layouts.footer')
