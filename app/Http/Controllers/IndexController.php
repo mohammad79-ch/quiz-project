@@ -10,6 +10,15 @@ class IndexController extends Controller
     public function index()
     {
         $questions = Question::with('subQuestion','users')->get();
-        return view('index',compact('questions'));
+
+        $users = [];
+
+        foreach ($questions as $question){
+            foreach ($question->users as $user){
+                $users[]=$user;
+            }
+        }
+
+        return view('index',compact('questions','users'));
     }
 }
