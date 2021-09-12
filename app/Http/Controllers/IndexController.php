@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -12,6 +13,9 @@ class IndexController extends Controller
 {
     public function index()
     {
+
+        $images = Image::with('user')->where('expired','>',now())->get();
+
         $questions = Question::with('subQuestion','users')->get();
 
 
@@ -19,7 +23,8 @@ class IndexController extends Controller
 
         foreach ($questions as $question){
             foreach ($question->users as $user){
-                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$user->getCorrectAnswer()];
+                $correctAnswer= $user->questions->filter(fn($q) => $q->pivot->is_correct)->count();
+                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$correctAnswer];
             }
         }
 
@@ -28,7 +33,7 @@ class IndexController extends Controller
         $users=$this->paginate($users,10);
 
 
-        return view('index',compact('questions','users'));
+        return view('index',compact('questions','users','images'));
     }
 
     public function paginate($items, $perPage = 10, $page = null, $options = [])

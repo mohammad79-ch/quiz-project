@@ -27,6 +27,8 @@ class User extends Authenticatable
     ];
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $with = ['questions'];
+
 
     public function questions()
     {

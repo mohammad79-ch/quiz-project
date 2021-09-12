@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,7 +13,7 @@ class ImageController extends Controller
 
     }
 
-    public function saveImageUser($profile,Request $request)
+    public function saveUserStory($profile,Request $request)
     {
         if ($request->hasFile('url')){
             $getName = Str::random('7').'-'.$request->file('url')->getClientOriginalName();
@@ -20,6 +21,7 @@ class ImageController extends Controller
             $request->file('url')->storeAs(
                 'UserStory',
                 $getName,
+                'public'
             );
 
             auth()->user()->images()->create([
@@ -30,6 +32,14 @@ class ImageController extends Controller
 
         }
 
+        return back();
+    }
+
+    public function deleteUserStory($profile,Image $image)
+    {
+        $this->authorize('delete',$image);
+
+        $image->delete();
         return back();
     }
 }

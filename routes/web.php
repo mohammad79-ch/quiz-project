@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\SubQuestionController;
@@ -21,9 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
-Route::group(['middleware'=>'auth'],function (){
 Route::get('profile/@{profile}',[PanelController::class,'index'])->name('profile');
-Route::post('@{profile}/image',[\App\Http\Controllers\ImageController::class,'saveImageUser'])->name('user.images');
+Route::group(['middleware'=>'auth'],function (){
+Route::post('@{profile}/image',[ImageController::class,'saveUserStory'])->name('user.images');
+Route::delete('@{profile}/images/{image}',[ImageController::class,'deleteUserStory'])->name('user.delete.story');
 });
 
 Route::get('/',[IndexController::class,'index']);
