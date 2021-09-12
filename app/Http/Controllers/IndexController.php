@@ -13,8 +13,8 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $images = Image::with('user')->get();
 
+        $images = Image::with('user')->where('expired','>',now())->get();
 
         $questions = Question::with('subQuestion','users')->get();
 
