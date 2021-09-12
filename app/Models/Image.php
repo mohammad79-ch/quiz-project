@@ -16,4 +16,7 @@ class Image extends Model
       'alt'
     ];
 
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
