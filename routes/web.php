@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
-Route::group(['middleware'=>'auth'],function (){
 Route::get('profile/@{profile}',[PanelController::class,'index'])->name('profile');
+Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',[ImageController::class,'saveUserStory'])->name('user.images');
 Route::delete('@{profile}/images/{image}',[ImageController::class,'deleteUserStory'])->name('user.delete.story');
 });

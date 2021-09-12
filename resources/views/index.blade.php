@@ -25,25 +25,35 @@
                     @endforeach
                 </div>
             </div>
-                <div class="col-12">
+            @auth
+                <div class="col-12 mt-3">
                     <form action="{{route('user.images',$image->user->profile)}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group d-flex offset-4 mt-3">
-                            <input type="file" class="form-control-file" name="url">
+                        <span class="font-weight-bold">Choose The Image For Story</span>
+                        <div class="form-group d-flex mt-3">
+                            <input type="file" class="form-control  form-control-file" name="url">
                             <input type="submit" value="publish" class="btn btn-success">
                         </div>
                     </form>
                 </div>
+            @endauth
         </div>
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
-                            @foreach($users as $user)
 
+                            @foreach($users as $key => $user)
                             <div class="col-12 d-flex justify-content-between" style="height: auto">
-                                 <div><span class="font-weight-bold">
+                                 <div class="d-flex">
+                                        @if($loop->iteration == 1)
+                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background: #cfcf04;">{{$loop->iteration}}</p>
+                                         @elseif($loop->iteration == 2)
+                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background:gray;">{{$loop->iteration}}</p>
+                                         @elseif($loop->iteration == 3)
+                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background: #ff4e09;">{{$loop->iteration}}</p>
+                                         @endif
                                          <span class="font-weight-bold" >{{$user['name']}}</span>
-                                     </span></div>
+                                 </div>
                                 <div>
                                     <a href="{{route('profile',['profile'=>$user['profile']])}}">See Profile</a>
                                 </div>
