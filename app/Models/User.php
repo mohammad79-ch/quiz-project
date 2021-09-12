@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $correctCount;
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

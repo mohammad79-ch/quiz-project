@@ -4,11 +4,18 @@
     <!-- Intro
 ================================================== -->
     <div class="container">
+        <div class="row">
+            <form action="{{route('user.images',['profile'=>auth()->user()->profile])}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group d-flex offset-4 mt-3">
+                    <input type="file" class="form-control-file" name="url">
+                    <input type="submit" value="publish" class="btn btn-success">
+                </div>
+            </form>
+        </div>
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
-
-
                             @foreach($users as $user)
 
                             <div class="col-12 d-flex justify-content-between" style="height: auto">
