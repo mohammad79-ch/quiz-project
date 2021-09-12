@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('section')
+
+    <style>
+        .medal{
+            margin-right: 10px;
+            border-radius: 50%;
+            width: 25px;
+            line-height: 25px;
+            height: 25px;
+        }
+    </style>
     <!-- Intro
 ================================================== -->
     <div class="container">
@@ -8,12 +18,17 @@
             <div class="col-12">
                 <div class="d-flex mt-3">
                     @foreach($images as $image)
-                    <div class="ml-2" style="margin-left: 5px">
-                        <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50" class="rounded-circle border" alt="">
-                        <p style="font-size: 14px" class="font-weight-bold"><a href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}</a></p>
-                    </div>
+                        <div class="ml-2" style="margin-left: 5px">
+                            <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50"
+                                 class="rounded-circle border" alt="">
+                            <p style="font-size: 14px" class="font-weight-bold"><a
+                                    href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}</a>
+                            </p>
+                        </div>
                         @if(auth()->id() == $image->user->id)
-                            <span ><a href="" onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()" class="text-danger font-weight-bold">x</a></span>
+                            <span><a href=""
+                                     onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()"
+                                     class="text-danger font-weight-bold">x</a></span>
                             <form
                                 action="{{route('user.delete.story',['profile'=>auth()->user()->profile,'image'=>$image])}}"
                                 method="post"
@@ -27,7 +42,8 @@
             </div>
             @auth
                 <div class="col-12 mt-3">
-                    <form action="{{route('user.images',$image->user->profile)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('user.images',$image->user->profile)}}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
                         <span class="font-weight-bold">Choose The Image For Story</span>
                         <div class="form-group d-flex mt-3">
@@ -42,26 +58,26 @@
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
 
-                            @foreach($users as $key => $user)
-                            <div class="col-12 d-flex justify-content-between" style="height: auto">
-                                 <div class="d-flex">
-                                        @if($loop->iteration == 1)
-                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background: #cfcf04;">{{$loop->iteration}}</p>
-                                         @elseif($loop->iteration == 2)
-                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background:gray;">{{$loop->iteration}}</p>
-                                         @elseif($loop->iteration == 3)
-                                             <p class="text-center text-white" style=" margin-right:10px;border-radius: 50%;width: 25px;line-height:25px;height: 25px;background: #ff4e09;">{{$loop->iteration}}</p>
-                                         @endif
-                                         <span class="font-weight-bold" >{{$user['name']}}</span>
-                                 </div>
-                                <div>
-                                    <a href="{{route('profile',['profile'=>$user['profile']])}}">See Profile</a>
-                                </div>
-                              </div>
-                                <hr>
-                            @endforeach
-                        {{$users->links()}}
+                @foreach($users as $key => $user)
+                    <div class="col-12 d-flex justify-content-between" style="height: auto">
+                        <div class="d-flex">
+                            @if($loop->iteration == 1)
+                                <p  class="medal text-center text-white bg-warning">{{$loop->iteration}}</p>
+                            @elseif($loop->iteration == 2)
+                                <p class=" medal text-center text-white bg-secondary">{{$loop->iteration}}</p>
+                            @elseif($loop->iteration == 3)
+                                <p class="medal text-center text-white bg-danger">{{$loop->iteration}}</p>
+                            @endif
+                            <span class="font-weight-bold">{{$user['name']}}</span>
+                        </div>
+                        <div>
+                            <a href="{{route('profile',['profile'=>$user['profile']])}}">See Profile</a>
+                        </div>
                     </div>
+                    <hr>
+                @endforeach
+                {{$users->links()}}
+            </div>
             <div class="alert alert-primary col-md-7 offset-1 "><p class="mb-2 font-weight-bold">Question</p>
                 @auth
                     @foreach($questions as $question)
