@@ -14,20 +14,18 @@ class IndexController extends Controller
     {
         $questions = Question::with('subQuestion','users')->get();
 
-        $users = [];
 
+        $users = [];
 
         foreach ($questions as $question){
             foreach ($question->users as $user){
-                $users[]=$user;
+                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$user->getCorrectAnswer()];
             }
         }
 
-        $users=collect($users)->unique('name')->all();
+        $users=collect($users)->unique('name')->sortByDesc('correctAnswer')->all();
 
         $users=$this->paginate($users,10);
-
-
 
 
         return view('index',compact('questions','users'));
@@ -37,7 +35,9 @@ class IndexController extends Controller
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        return
+            new LengthAwarePaginator($items->forPage($page, $perPage),
+                $items->count(),$perPage, $page, $options);
     }
 
 }

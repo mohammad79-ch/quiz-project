@@ -7,33 +7,16 @@
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
+
+
                             @foreach($users as $user)
+
                             <div class="col-12 d-flex justify-content-between" style="height: auto">
                                  <div><span class="font-weight-bold">
-                                         <a href="{{route('profile',['profile'=>$user['profile']])}}">{{$user['name']}}</a>
+                                         <span class="font-weight-bold" >{{$user['name']}}</span>
                                      </span></div>
-                                <div class="d-flex">
-                                    <span style="border-radius: 15px;padding: 7px;" class=" ml-2 bg-success">
-                                        ✓
-                                        @php
-                                            $countAnswer = $user->questions->filter(function ($item){
-                                               return $item->pivot->is_correct == 1 ;
-                                           });
-                                           echo count($countAnswer);
-                                        @endphp
-                                    </span>
-                                    <span style="border-radius: 15px;padding: 7px;margin-left: 7px" class=" ml-2 bg-danger">
-                                    &#9888
-                                     @php
-                                        $countWrong = $user->questions->filter(function ($item){
-                                            return $item->pivot->is_correct == 0 ;
-                                        });
-                                        echo count($countWrong);
-                                     @endphp
-                                    </span>
-                                    <span style="border-radius: 15px;padding: 7px;margin-left: 7px" class=" ml-2 bg-warning">
-                                        Sum : {{$user->questions()->count()}}
-                                    </span>
+                                <div>
+                                    <a href="{{route('profile',['profile'=>$user['profile']])}}">See Profile</a>
                                 </div>
                               </div>
                                 <hr>
