@@ -10,6 +10,20 @@
                     </div>
                     <hr>
                     <div class="card-body">
+                    <div class="text-center mt-3">
+                        <img src="{{!is_null($user->image) ? asset('userImg/'.$user->image) : asset('images/defUser.png')}}" width="50" alt="">
+                    </div>
+                        <div class="d-flex justify-content-around mt-3">
+                            <p style="font-size: 14px;font-weight: bold;margin: 3px">fllowers</p>
+                            <p style="font-size: 14px;font-weight: bold;margin: 3px">following</p>
+                            <p style="font-size: 14px;font-weight: bold;margin: 3px">posts</p>
+                        </div>
+                        <div class="d-flex justify-content-around mt-3">
+                            <p>{{$user->followers->count()}}</p>
+                            <p>{{$user->following->count()}}</p>
+                            <p>5</p>
+                        </div>
+                        <a href="{{route('user.follow',['profile'=>$user->profile])}}" class="btn btn-light d-block mb-4 font-weight-bold">Follow</a>
                             <div class="d-flex justify-content-between">
                                 <div><p style="font-size: 12px">All Answer</p></div>
                                 <div><p class="bg-warning text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">{{$totalAnswer}}</p></div>

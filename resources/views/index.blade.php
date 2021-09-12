@@ -21,8 +21,12 @@
                         <div class="ml-2" style="margin-left: 5px">
                             <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50"
                                  class="rounded-circle border" alt="">
-                            <p style="font-size: 14px" class="font-weight-bold"><a
-                                    href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}</a>
+                            <p style="font-size: 14px" class="font-weight-bold">
+                                <a
+                                    href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}
+                                </a>
+                                <br>
+{{--                                <a href="" >{{$image->created_at->diffForHumans()}}</a>--}}
                             </p>
                         </div>
                         @if(auth()->id() == $image->user->id)

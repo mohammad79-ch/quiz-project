@@ -32,6 +32,8 @@ Route::get('/',[IndexController::class,'index']);
 Route::get('/log',fn() => auth()->logout());
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
+
+    Route::get('profile/@{profile}/follow',[PanelController::class,'follow'])->name('user.follow');
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
 
     Route::resource('/questions',\App\Http\Controllers\QuestionController::class);
@@ -47,3 +49,10 @@ Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('testf',function (){
+   $user = \App\Models\User::find(13);
+   $user2= \App\Models\User::find(2);
+   $user2->follow($user);
+   dd($user->followers);
+});

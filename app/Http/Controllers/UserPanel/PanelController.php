@@ -21,4 +21,14 @@ class PanelController extends Controller
         return view('panel.index',
             compact('user','totalAnswer','correctAnswer','wrongAnswer'));
     }
-}
+
+
+    public function follow($profile)
+    {
+        $user2 = User::where('profile', $profile)->first();
+
+        auth()->user()->follow($user2);
+
+        return back();
+    }
+    }
