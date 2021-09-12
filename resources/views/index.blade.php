@@ -5,13 +5,25 @@
 ================================================== -->
     <div class="container">
         <div class="row">
-            <form action="{{route('user.images',['profile'=>auth()->user()->profile])}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group d-flex offset-4 mt-3">
-                    <input type="file" class="form-control-file" name="url">
-                    <input type="submit" value="publish" class="btn btn-success">
+            <div class="col-12">
+                <div class="d-flex mt-3">
+                    @foreach($images as $image)
+                    <div class="ml-2"style="margin-left: 5px">
+                        <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50" class="rounded-circle border" alt="">
+                        <p>{{$image->user->prfile}}</p>
+                    </div>
+                    @endforeach
                 </div>
-            </form>
+            </div>
+                <div class="col-12">
+                    <form action="{{route('user.images',['profile'=>auth()->user()->profile])}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group d-flex offset-4 mt-3">
+                            <input type="file" class="form-control-file" name="url">
+                            <input type="submit" value="publish" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
         </div>
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">

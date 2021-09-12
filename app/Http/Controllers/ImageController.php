@@ -20,6 +20,7 @@ class ImageController extends Controller
             $request->file('url')->storeAs(
                 'UserStory',
                 $getName,
+                'public'
             );
 
             auth()->user()->images()->create([
