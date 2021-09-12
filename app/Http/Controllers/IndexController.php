@@ -23,7 +23,8 @@ class IndexController extends Controller
 
         foreach ($questions as $question){
             foreach ($question->users as $user){
-                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$user->getCorrectAnswer()];
+                $correctAnswer= $user->questions->filter(fn($q) => $q->pivot->is_correct)->count();
+                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$correctAnswer];
             }
         }
 
