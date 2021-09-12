@@ -8,15 +8,23 @@
             <div class="col-12">
                 <div class="d-flex mt-3">
                     @foreach($images as $image)
-                    <div class="ml-2"style="margin-left: 5px">
+                    <div class="ml-2" style="margin-left: 5px">
                         <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50" class="rounded-circle border" alt="">
                         <p style="font-size: 14px" class="font-weight-bold"><a href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}</a></p>
                     </div>
+                        <span ><a href="" onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()" class="text-danger font-weight-bold">x</a></span>
+                        <form
+                            action="{{route('user.delete.story',['profile'=>auth()->user()->profile,'image'=>$image])}}"
+                            method="post"
+                            id="user.delete.story{{$image->id}}">
+                            @csrf
+                            @method("DELETE")
+                        </form>
                     @endforeach
                 </div>
             </div>
                 <div class="col-12">
-                    <form action="{{route('user.images',['profile'=>auth()->user()->profile])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('user.images',$image->user->profile)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group d-flex offset-4 mt-3">
                             <input type="file" class="form-control-file" name="url">
