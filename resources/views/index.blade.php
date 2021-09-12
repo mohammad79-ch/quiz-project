@@ -12,14 +12,16 @@
                         <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50" class="rounded-circle border" alt="">
                         <p style="font-size: 14px" class="font-weight-bold"><a href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}</a></p>
                     </div>
-                        <span ><a href="" onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()" class="text-danger font-weight-bold">x</a></span>
-                        <form
-                            action="{{route('user.delete.story',['profile'=>auth()->user()->profile,'image'=>$image])}}"
-                            method="post"
-                            id="user.delete.story{{$image->id}}">
-                            @csrf
-                            @method("DELETE")
-                        </form>
+                        @if(auth()->id() == $image->user->id)
+                            <span ><a href="" onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()" class="text-danger font-weight-bold">x</a></span>
+                            <form
+                                action="{{route('user.delete.story',['profile'=>auth()->user()->profile,'image'=>$image])}}"
+                                method="post"
+                                id="user.delete.story{{$image->id}}">
+                                @csrf
+                                @method("DELETE")
+                            </form>
+                        @endif
                     @endforeach
                 </div>
             </div>

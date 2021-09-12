@@ -37,6 +37,8 @@ class ImageController extends Controller
 
     public function deleteUserStory($profile,Image $image)
     {
+        $this->authorize('delete',$image);
+
         $image->delete();
         return back();
     }
