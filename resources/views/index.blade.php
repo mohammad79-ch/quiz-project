@@ -38,6 +38,8 @@
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
+
+
                             @foreach($users as $user)
 
                             <div class="col-12 d-flex justify-content-between" style="height: auto">
