@@ -58,6 +58,7 @@ class User extends Authenticatable
         return $correctCount;
     }
 
+
     public function images()
     {
         return $this->hasMany(Image::class);
