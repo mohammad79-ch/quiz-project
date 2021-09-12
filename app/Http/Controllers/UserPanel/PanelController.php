@@ -11,6 +11,14 @@ class PanelController extends Controller
     public function index($profile)
     {
         $user = User::whereProfile($profile)->first();
-        return view('panel.index',compact('user'));
+
+        $totalAnswer = $user->totalAnswer();
+
+        $correctAnswer = $user->getCorrectAnswer();
+
+        $wrongAnswer = $user->getWrongAnswer();
+
+        return view('panel.index',
+            compact('user','totalAnswer','correctAnswer','wrongAnswer'));
     }
 }
