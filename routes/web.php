@@ -33,7 +33,6 @@ Route::get('/log',fn() => auth()->logout());
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
 
-    Route::get('profile/@{profile}/follow',[PanelController::class,'follow'])->name('user.follow');
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
 
     Route::resource('/questions',\App\Http\Controllers\QuestionController::class);

@@ -23,12 +23,4 @@ class PanelController extends Controller
     }
 
 
-    public function follow($profile)
-    {
-        $user2 = User::where('profile', $profile)->first();
-
-        auth()->user()->follow($user2);
-
-        return back();
-    }
     }

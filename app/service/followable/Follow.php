@@ -21,23 +21,31 @@ trait Follow
     public function follow($user)
     {
         if (!$this->isFollowing($user) && $user->id != $this->id){
-        return $this->following()->attach($user);
+
+           $this->following()->attach($user);
+            return TRUE;
         }
+
+        return null;
     }
 
     public function unFollow($user)
     {
-        return $this->following()->detach($user);
+        if ($this->isFollowing($user)){
+         $this->following()->detach($user);
+         return true;
+        }
+
     }
 
     public function isFollowing($user)
     {
-        return !!$this->followers()->where('following_id',$user->id)->first();
+        return !!$this->following()->where('following_id',$user->id)->count();
     }
 
     public function isFollowinBy($user)
     {
-        return $this->following()->where('follower_id',$user->id);
+        return !! $this->followers()->where('follower_id',$user->id)->count();
     }
 
 }

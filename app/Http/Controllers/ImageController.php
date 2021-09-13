@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use UxWeb\SweetAlert\SweetAlert;
 
 class ImageController extends Controller
 {
@@ -30,7 +31,9 @@ class ImageController extends Controller
                 'expired'=>now()->addDay()
             ]);
 
+            SweetAlert::success('your story has been published','wef');
         }
+
 
         return back();
     }
