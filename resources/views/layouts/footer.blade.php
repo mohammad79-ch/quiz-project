@@ -75,5 +75,7 @@
 @livewireScripts
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="js/landio.min.js"></script>
+@include('sweet::alert')
+
 </body>
 </html>

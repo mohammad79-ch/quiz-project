@@ -46,7 +46,7 @@
             </div>
             @auth
                 <div class="col-12 mt-3">
-                    <form action="{{route('user.images',$image->user->profile)}}" method="post"
+                    <form action="{{route('user.images',auth()->user()->profile)}}" method="post"
                           enctype="multipart/form-data">
                         @csrf
                         <span class="font-weight-bold">Choose The Image For Story</span>
