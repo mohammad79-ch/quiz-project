@@ -61,10 +61,9 @@
     </div>
 </header>
 
-
-@yield('section')
 <!-- Sign Up
 ================================================== -->
+{{$slot}}
 
 <section class="section-signup bg-faded">
     <div class="container">

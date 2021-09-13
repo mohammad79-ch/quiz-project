@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Livewire;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Livewire\Component;
 use UxWeb\SweetAlert\SweetAlert;
 
-class ImageController extends Controller
+class UserStoryComponent extends Component
 {
-    public function index()
-    {
-
-    }
+    public $images ;
 
     public function saveUserStory($profile,Request $request)
     {
@@ -26,7 +24,7 @@ class ImageController extends Controller
             );
 
             auth()->user()->images()->create([
-               'url'=>$getName,
+                'url'=>$getName,
                 'alt'=>Str::slug("simple slug for $profile profile"),
                 'expired'=>now()->addDay()
             ]);
@@ -40,9 +38,15 @@ class ImageController extends Controller
 
     public function deleteUserStory($profile,Image $image)
     {
-        $this->authorize('delete',$image);
+        if (!$image->user->name == auth()->id()){
+          return  abort(403);
+        }
 
         $image->delete();
         return back();
+    }
+    public function render()
+    {
+        return view('livewire.user-story-component');
     }
 }
