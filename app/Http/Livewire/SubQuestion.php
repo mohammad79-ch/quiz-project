@@ -10,7 +10,7 @@ class SubQuestion extends Component
 
     public bool $checkQuestion = false;
 
-    protected $listeners = ['subQuestion' => '$refresh'];
+
 
     public $level;
 
@@ -65,6 +65,9 @@ class SubQuestion extends Component
             $this->checkQuestion = true;
             $this->question->users()->attach(auth()->id() ,['is_correct' => 0]);
         }
+
+        $this->emit('firethis');
+
     }
 
     public function render()
