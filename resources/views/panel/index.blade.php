@@ -16,7 +16,7 @@
                             </div>
 
                             <div class="d-flex justify-content-around mt-3">
-                                <p style="font-size: 14px;font-weight: bold;margin: 3px">fllowers</p>
+                                <p style="font-size: 14px;font-weight: bold;margin: 3px">followers</p>
                                 <p style="font-size: 14px;font-weight: bold;margin: 3px">following</p>
                                 <p style="font-size: 14px;font-weight: bold;margin: 3px">posts</p>
                             </div>
