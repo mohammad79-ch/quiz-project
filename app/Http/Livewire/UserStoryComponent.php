@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Image;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -12,6 +13,8 @@ use UxWeb\SweetAlert\SweetAlert;
 
 class UserStoryComponent extends Component
 {
+    use AuthorizesRequests;
+
     protected $listeners = [
         'fireUserStoryComponent'=>'$refresh'
     ];
@@ -20,9 +23,7 @@ class UserStoryComponent extends Component
 
     public function deleteStory(Image $image)
     {
-        if (!$image->user->name == auth()->id()) {
-            return abort(403);
-        }
+        $this->authorize('delete',$image);
 
         if (File::exists(public_path('storage/photos'.$image->url))){
             File::delete(public_path('storage/photos'.$image->url));

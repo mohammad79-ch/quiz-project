@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class FollowComponent extends Component
 {
+    protected $listeners = ['refreshfollow'=>'$refresh'];
 
     public $user ;
     public $followerCount;
@@ -14,13 +15,7 @@ class FollowComponent extends Component
     public $followingCount ;
     public $followings ;
 
-    public function mount()
-    {
-        $this->followers = $this->user->followers;
-        $this->followerCount = $this->user->followers->count();
-        $this->followingCount = $this->user->following->count();
-        $this->following = $this->user->following;
-    }
+    public $isFollowinBy;
 
     public function follow()
     {
@@ -32,7 +27,7 @@ class FollowComponent extends Component
             $this->followerCount++;
         }
 
-        return back();
+        $this->emit('refreshfollow');
     }
 
     public function unfollow()
@@ -45,11 +40,18 @@ class FollowComponent extends Component
             $this->followerCount--;
         }
 
-        return back();
+        $this->emit('refreshfollow');
     }
 
     public function render()
     {
+        $this->followers = $this->user->followers;
+        $this->followerCount = $this->user->followers->count();
+        $this->followings = $this->user->following;
+        $this->followingCount = $this->user->following->count();
+        $this->isFollowinBy = $this->user->isFollowinBy(auth()->user());
+
         return view('livewire.follow-component');
     }
+
 }

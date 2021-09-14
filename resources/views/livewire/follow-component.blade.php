@@ -19,7 +19,7 @@
     </div>
         @auth
 
-        @if($user->isFollowinBy(auth()->user()))
+        @if($isFollowinBy)
             <a href="" wire:click.prevent="unfollow" class="btn btn-light d-block mb-4 font-weight-bold">  UnFollow    </a>
 
         @else
@@ -29,6 +29,7 @@
         @endif
 
     <div class="bg-light" id="followers" >
+         <span class="font-weight-bold">Followers</span>
         <ul>
             @forelse($followers as $follower)
                 <li>{{$follower->name}}</li>
@@ -37,17 +38,14 @@
             @endforelse
         </ul>
     </div>
-    <div class="bg-light d-none" id="following">
+    <div class="bg-light" id="following">
+        <span class="font-weight-bold">Following</span>
         <ul>
-            @if(!is_null($followings))
             @forelse($followings as $following)
                 <li>{{$following->name}}</li>
                 @empty
                     <li>No Following</li>
             @endforelse
-            @else
-                    <li>No Following</li>
-            @endif
         </ul>
     </div>
 </div>
@@ -57,7 +55,7 @@
         $(document).ready(function (){
             $("#followerCount").click(function (){
                 $("#followers").slideToggle(200);
-            })
+            });
             $("#followingCount").click(function (){
                 $("#following").slideToggle(200);
             })

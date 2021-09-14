@@ -8,6 +8,7 @@ use App\Http\Controllers\SubQuestionController;
 use App\Http\Livewire\FollowComponent;
 use App\Http\Livewire\UserPanelComponent;
 use App\Http\Livewire\UserStoryComponent;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,15 +22,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
+Auth::routes();
 
+
+Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
+
 
 Route::get('profile/@{profile}', UserPanelComponent::class)->name('profile');
 
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
-//Route::delete('@{profile}/images/{image}',[ImageController::class,'deleteUserStory'])->name('user.delete.story');
 });
 
 Route::get('/',[IndexController::class,'index']);
@@ -55,13 +58,5 @@ Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
     Route::put('/subQuestion/{sub_question}',[SubQuestionController::class,'update'])->name('sub_question.update');
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('testf',function (){
-   $user = \App\Models\User::find(13);
-   $user2= \App\Models\User::find(2);
-   $user2->follow($user);
-   dd($user->followers);
-});

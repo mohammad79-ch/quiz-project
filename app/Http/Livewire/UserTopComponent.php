@@ -7,9 +7,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UserTopComponent extends Component
 {
+    use WithPagination;
 
     protected $listeners = [
         'firethis' =>'$refresh'
