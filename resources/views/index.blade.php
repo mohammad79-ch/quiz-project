@@ -15,72 +15,18 @@
 ================================================== -->
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="d-flex mt-3">
-                    @foreach($images as $image)
-                        <div class="ml-2" style="margin-left: 5px">
-                            <img src="{{asset('storage/UserStory/'.$image->url)}}" width="50"
-                                 class="rounded-circle border" alt="">
-                            <p style="font-size: 14px" class="font-weight-bold">
-                                <a
-                                    href="{{route('profile',$image->user->profile)}}">{{shorter($image->user->profile,7)}}
-                                </a>
-                                <br>
-{{--                                <a href="" >{{$image->created_at->diffForHumans()}}</a>--}}
-                            </p>
-                        </div>
-                        @if(auth()->id() == $image->user->id)
-                            <span><a href=""
-                                     onclick="event.preventDefault();document.getElementById('user.delete.story{{$image->id}}').submit()"
-                                     class="text-danger font-weight-bold">x</a></span>
-                            <form
-                                action="{{route('user.delete.story',['profile'=>auth()->user()->profile,'image'=>$image])}}"
-                                method="post"
-                                id="user.delete.story{{$image->id}}">
-                                @csrf
-                                @method("DELETE")
-                            </form>
-                        @endif
-                    @endforeach
-                </div>
+        @livewire('user-story-component')
+        @auth
+            <div class="col-12 mt-3">
+                @livewire('make-story-for-user')
             </div>
-            @auth
-                <div class="col-12 mt-3">
-                    <form action="{{route('user.images',auth()->user()->profile)}}" method="post"
-                          enctype="multipart/form-data">
-                        @csrf
-                        <span class="font-weight-bold">Choose The Image For Story</span>
-                        <div class="form-group d-flex mt-3">
-                            <input type="file" class="form-control  form-control-file" name="url">
-                            <input type="submit" value="publish" class="btn btn-success">
-                        </div>
-                    </form>
-                </div>
-            @endauth
+        @endauth
         </div>
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
+                @livewire('user-top-component')
 
-                @foreach($users as $key => $user)
-                    <div class="col-12 d-flex justify-content-between" style="height: auto">
-                        <div class="d-flex">
-                            @if($loop->iteration == 1)
-                                <p  class="medal text-center text-white bg-warning">{{$loop->iteration}}</p>
-                            @elseif($loop->iteration == 2)
-                                <p class=" medal text-center text-white bg-secondary">{{$loop->iteration}}</p>
-                            @elseif($loop->iteration == 3)
-                                <p class="medal text-center text-white bg-danger">{{$loop->iteration}}</p>
-                            @endif
-                            <span class="font-weight-bold">{{$user['name']}}</span>
-                        </div>
-                        <div>
-                            <a href="{{route('profile',['profile'=>$user['profile']])}}">See Profile</a>
-                        </div>
-                    </div>
-                    <hr>
-                @endforeach
-                {{$users->links()}}
             </div>
             <div class="alert alert-primary col-md-7 offset-1 "><p class="mb-2 font-weight-bold">Question</p>
                 @auth
@@ -374,5 +320,7 @@
             </div>
         </div>
     </section>
+
+
 
 @endsection

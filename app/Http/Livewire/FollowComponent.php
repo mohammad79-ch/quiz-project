@@ -9,13 +9,17 @@ class FollowComponent extends Component
 {
 
     public $user ;
-    public $follower;
-    public $following ;
+    public $followerCount;
+    public $followers;
+    public $followingCount ;
+    public $followings ;
 
     public function mount()
     {
-        $this->follower = $this->user->followers->count();
-        $this->following = $this->user->following->count();
+        $this->followers = $this->user->followers;
+        $this->followerCount = $this->user->followers->count();
+        $this->followingCount = $this->user->following->count();
+        $this->following = $this->user->following;
     }
 
     public function follow()
@@ -25,7 +29,7 @@ class FollowComponent extends Component
         $result = auth()->user()->follow($user2);
 
         if (!is_null($result)){
-            $this->follower++;
+            $this->followerCount++;
         }
 
         return back();
@@ -38,7 +42,7 @@ class FollowComponent extends Component
         $result = auth()->user()->unFollow($user2);
 
         if (!is_null($result) || $result){
-            $this->follower--;
+            $this->followerCount--;
         }
 
         return back();

@@ -5,7 +5,9 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\SubQuestionController;
-use App\Http\Controllers\UserPanel\PanelController;
+use App\Http\Livewire\FollowComponent;
+use App\Http\Livewire\UserPanelComponent;
+use App\Http\Livewire\UserStoryComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,18 +22,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
+
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
-Route::get('profile/@{profile}',[PanelController::class,'index'])->name('profile');
+Route::get('profile/@{profile}', UserPanelComponent::class)->name('profile');
+
 Route::group(['middleware'=>'auth'],function (){
-Route::post('@{profile}/image',[ImageController::class,'saveUserStory'])->name('user.images');
-Route::delete('@{profile}/images/{image}',[ImageController::class,'deleteUserStory'])->name('user.delete.story');
+Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
+//Route::delete('@{profile}/images/{image}',[ImageController::class,'deleteUserStory'])->name('user.delete.story');
 });
 
 Route::get('/',[IndexController::class,'index']);
-Route::get('/log',fn() => auth()->logout());
+
+Route::get('/log', function () {
+     auth()->logout();
+});
+
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
+
+    Route::get('profile/@{profile}/follow', FollowComponent::class);
 
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
 
