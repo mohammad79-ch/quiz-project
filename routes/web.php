@@ -65,3 +65,6 @@ Route::get('testf',function (){
    $user2->follow($user);
    dd($user->followers);
 });
+
+
+
