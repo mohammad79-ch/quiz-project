@@ -14,11 +14,19 @@
     <!-- Intro
 ================================================== -->
     <div class="container">
-        @livewire('user-story-component',['images'=>$images])
+        <div class="row">
+        @livewire('user-story-component')
+        @auth
+            <div class="col-12 mt-3">
+                @livewire('make-story-for-user')
+            </div>
+        @endauth
+        </div>
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
                 @livewire('user-top-component')
+
             </div>
             <div class="alert alert-primary col-md-7 offset-1 "><p class="mb-2 font-weight-bold">Question</p>
                 @auth

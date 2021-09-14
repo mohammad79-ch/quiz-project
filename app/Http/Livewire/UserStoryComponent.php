@@ -4,49 +4,38 @@ namespace App\Http\Livewire;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use UxWeb\SweetAlert\SweetAlert;
 
 class UserStoryComponent extends Component
 {
-    public $images ;
+    protected $listeners = [
+        'fireUserStoryComponent'=>'$refresh'
+    ];
 
-    public function saveUserStory($profile,Request $request)
+    public $images;
+
+    public function deleteStory(Image $image)
     {
-        if ($request->hasFile('url')){
-            $getName = Str::random('7').'-'.$request->file('url')->getClientOriginalName();
-
-            $request->file('url')->storeAs(
-                'UserStory',
-                $getName,
-                'public'
-            );
-
-            auth()->user()->images()->create([
-                'url'=>$getName,
-                'alt'=>Str::slug("simple slug for $profile profile"),
-                'expired'=>now()->addDay()
-            ]);
-
-            SweetAlert::success('your story has been published','wef');
+        if (!$image->user->name == auth()->id()) {
+            return abort(403);
         }
 
-
-        return back();
-    }
-
-    public function deleteUserStory($profile,Image $image)
-    {
-        if (!$image->user->name == auth()->id()){
-          return  abort(403);
+        if (File::exists(public_path('storage/photos'.$image->url))){
+            File::delete(public_path('storage/photos'.$image->url));
         }
 
         $image->delete();
-        return back();
+
     }
+
     public function render()
     {
+        $this->images = Image::with('user')->where('expired','>',now())->get();
+
         return view('livewire.user-story-component');
     }
 }
