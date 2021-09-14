@@ -8,18 +8,13 @@
                 </div>
                 <hr>
                 <div class="card-body">
-                    @auth
                         <div class="text-center mt-3">
                             <img src="{{!is_null($user->image) ? asset('userImg/'.$user->image) : asset('images/defUser.png')}}" width="50" alt="">
                         </div>
 
-                        <div class="d-flex justify-content-around mt-3">
-                            <p style="font-size: 14px;font-weight: bold;margin: 3px">followers</p>
-                            <p style="font-size: 14px;font-weight: bold;margin: 3px">following</p>
-                            <p style="font-size: 14px;font-weight: bold;margin: 3px">posts</p>
-                        </div>
                         @livewire('follow-component',['user'=>$user])
-                    @endauth
+
+
                     <div class="d-flex justify-content-between">
                         <div><p style="font-size: 12px">All Answer</p></div>
                         <div><p class="bg-warning text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">{{$totalAnswer}}</p></div>

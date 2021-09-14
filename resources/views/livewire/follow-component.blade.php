@@ -1,14 +1,66 @@
 <div>
+
+    <style>
+        #followers,#following {
+            display: none;
+        }
+
+    </style>
+
     <div class="d-flex justify-content-around mt-3">
-            <p>{{$follower}}</p>
-        <p>{{$following}}</p>
+        <p style="font-size: 14px;font-weight: bold;margin: 3px">followers</p>
+        <p style="font-size: 14px;font-weight: bold;margin: 3px">following</p>
+        <p style="font-size: 14px;font-weight: bold;margin: 3px">posts</p>
+    </div>
+    <div class="d-flex justify-content-around mt-3">
+            <a id="followerCount">{{$followerCount}}</a>
+        <a id="followingCount">{{$followingCount}}</a>
         <p>5</p>
     </div>
+        @auth
 
         @if($user->isFollowinBy(auth()->user()))
-        <a href="wire" wire:click.prevent="unfollow" class="btn btn-light d-block mb-4 font-weight-bold">  UnFollow    </a>
+            <a href="" wire:click.prevent="unfollow" class="btn btn-light d-block mb-4 font-weight-bold">  UnFollow    </a>
 
-    @else
-        <a href="wire" wire:click.prevent="follow" class="btn btn-light d-block mb-4 font-weight-bold">  Follow    </a>
-    @endif
+        @else
+            <a href="" wire:click.prevent="follow" class="btn btn-light d-block mb-4 font-weight-bold">  Follow    </a>
+        @endif
+
+        @endif
+
+    <div class="bg-light" id="followers" >
+        <ul>
+            @forelse($followers as $follower)
+                <li>{{$follower->name}}</li>
+                @empty
+                 <li>No follower</li>
+            @endforelse
+        </ul>
+    </div>
+    <div class="bg-light d-none" id="following">
+        <ul>
+            @if(!is_null($followings))
+            @forelse($followings as $following)
+                <li>{{$following->name}}</li>
+                @empty
+                    <li>No Following</li>
+            @endforelse
+            @else
+                    <li>No Following</li>
+            @endif
+        </ul>
+    </div>
 </div>
+@section('script')
+
+    <script>
+        $(document).ready(function (){
+            $("#followerCount").click(function (){
+                $("#followers").slideToggle(200);
+            })
+            $("#followingCount").click(function (){
+                $("#following").slideToggle(200);
+            })
+        })
+    </script>
+@endsection
