@@ -1,4 +1,9 @@
 <div>
+    <style>
+        svg {
+            width: 24px;
+        }
+    </style>
     @foreach($users as $key => $user)
         <div class="col-12 d-flex justify-content-between" style="height: auto">
             <div class="d-flex">
