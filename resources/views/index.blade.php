@@ -22,12 +22,21 @@
             </div>
         @endauth
         </div>
+            <div >
+                <h5 class="font-weight-bold">Article Section</h5>
+                <div class="alert alert-success">
+                    <strong><a href="/articles" class="font-weight-bold">All Article</a></strong>
+                </div>
+
+            </div>
+
         <div class="row mt-3">
             <div class="alert  alert-primary col-md-4 mr-2">
                 <h4 class="mb-5">10 top users to answer the questions</h4>
                 @livewire('user-top-component')
 
             </div>
+
             <div class="alert alert-primary col-md-7 offset-1 "><p class="mb-2 font-weight-bold">Question</p>
                 @auth
                     @foreach($questions as $question)

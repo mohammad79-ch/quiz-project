@@ -37,6 +37,10 @@ Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 
 Route::get('/',[IndexController::class,'index']);
 
+Route::get('/articles',\App\Http\Livewire\Articles\ArticleComponent::class);
+Route::get('/article/add',\App\Http\Livewire\Articles\AddArticleComponent::class)->name('add.article');
+
+
 Route::get('/log', function () {
      auth()->logout();
 });
@@ -57,6 +61,4 @@ Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
     Route::get('/subQuestion/{sub_question}/edit',[SubQuestionController::class,'edit'])->name('sub_question.edit');
     Route::put('/subQuestion/{sub_question}',[SubQuestionController::class,'update'])->name('sub_question.update');
 });
-
-
 

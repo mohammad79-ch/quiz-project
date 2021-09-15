@@ -66,7 +66,7 @@ class SubQuestion extends Component
             $this->question->users()->attach(auth()->id() ,['is_correct' => 0]);
         }
 
-        $this->emit('firethis');
+        $this->emit('fireUserTop');
 
     }
 
