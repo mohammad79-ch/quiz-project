@@ -62,6 +62,7 @@
                                 <div class="font-weight-bold btn btn-primary">More... </div>
                                 <div>
                                     <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
+                                    <span class=" mr-2"><a href="{{route('edit.article',$article)}}" class="font-weight-bold text-warning">Edit</a></span>
                                 </div>
                             </div>
 
