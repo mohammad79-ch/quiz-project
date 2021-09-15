@@ -17,7 +17,7 @@ class UserPanelComponent extends Component
 
     public function render()
     {
-            $user = User::whereProfile($this->profile)->first();
+            $user = User::with('articles')->whereProfile($this->profile)->first();
 
             $totalAnswer = $user->totalAnswer();
 

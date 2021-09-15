@@ -6,6 +6,7 @@ use App\service\followable\Follow;
 use App\service\questions\DetailQuestion;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -32,12 +33,15 @@ class User extends Authenticatable
     protected $with = ['questions'];
 
 
-    public function images()
+    public function images() : HasMany
     {
         return $this->hasMany(Image::class);
     }
 
-
+    public function articles() : HasMany
+    {
+        return $this->hasMany(Article::class);
+    }
 
 
     /**
