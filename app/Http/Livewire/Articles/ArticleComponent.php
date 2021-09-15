@@ -13,7 +13,9 @@ class ArticleComponent extends Component
     public function render()
     {
 
-        $articles = Article::paginate(20);
+        $articles = Article::with('user')
+            ->whereStatus(1)
+            ->paginate(20);
 
         return view('livewire.articles.article-component',compact('articles'))
             ->layout('layouts.base');

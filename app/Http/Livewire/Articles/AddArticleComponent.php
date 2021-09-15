@@ -33,7 +33,7 @@ class AddArticleComponent extends Component
         auth()->user()->articles()->create([
             'title' => $this->title,
             'content'=>$this->content,
-            'image'=>$this->image,
+            'image'=>$imageName,
             'status'=>$this->status
         ]);
 
