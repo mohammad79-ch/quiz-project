@@ -14,7 +14,7 @@ class MakeStoryForUser extends Component
     public $name;
 
     protected $rules = [
-        'photo' => 'required|mimes:jpeg,jpg,png,gif|required|max:10000',
+        'photo' => 'required|mimes:jpeg,jpg,png,gif,webp|required|max:10000',
     ];
 
     public function updated($propertyName)

@@ -13,8 +13,10 @@ class UserTopComponent extends Component
 {
     use WithPagination;
 
+
+
     protected $listeners = [
-        'firethis' =>'$refresh'
+        'fireUserTop' =>'$refresh'
     ];
 
     public function paginate($items, $perPage = 10, $page = null, $options = [])
