@@ -18,15 +18,15 @@
         <p>5</p>
     </div>
         @auth
+            @if(auth()->user()->id != $user->id )
+            @if($isFollowinBy)
+                <a href="" wire:click.prevent="unfollow" class="btn btn-light d-block mb-4 font-weight-bold">  UnFollow    </a>
 
-        @if($isFollowinBy)
-            <a href="" wire:click.prevent="unfollow" class="btn btn-light d-block mb-4 font-weight-bold">  UnFollow    </a>
-
-        @else
-            <a href="" wire:click.prevent="follow" class="btn btn-light d-block mb-4 font-weight-bold">  Follow    </a>
+            @else
+                <a href="" wire:click.prevent="follow" class="btn btn-light d-block mb-4 font-weight-bold">  Follow    </a>
+            @endif
         @endif
-
-        @endif
+        @endauth
 
     <div class="bg-light" id="followers" >
          <span class="font-weight-bold">Followers</span>
