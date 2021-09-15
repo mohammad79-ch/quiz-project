@@ -44,7 +44,7 @@
         <div><strong>مهمان</strong></div>
     @endguest
     @auth
-        <div><a href="" class="text-white">Name : {{auth()->user()->name}}</a></div>
+        <div><a href="{{route('profile',auth()->user()->profile)}}" class="text-white">Name : {{auth()->user()->name}}</a></div>
         <div><a href="{{route('admin.dashboard')}}" class="text-white">Dashboard</a></div>
     @endauth
 </div>

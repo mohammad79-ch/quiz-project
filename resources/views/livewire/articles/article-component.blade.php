@@ -15,7 +15,7 @@
                 <div class="article_section_details d-flex justify-content-between mt-4">
                     <div><h3 class="font-weight-bold"><a href="" class="text-dark">{{$article->title}}</a></h3>
                     </div>
-                    <div class="font-weight-bold">Author : <span class="text-success">{{$article->user->name}}</span></div>
+                    <div class="font-weight-bold"> Author : <span class="text-success">{{$article->user->name}}</span></div>
                 </div>
                 <div class="article_content p-2 ">
                     <p>{{$article->content}}</p>

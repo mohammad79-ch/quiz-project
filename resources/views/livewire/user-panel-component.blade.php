@@ -3,7 +3,7 @@
     <div class="d-flex mt-3">
         <div style="flex: 1">
             <div class="card p-3">
-                <div class="header">
+                <div class="card-header">
                     All Details Blong to {{$user->name}}
                 </div>
                 <hr>
@@ -37,15 +37,42 @@
         </div>
         <div style="flex:3;margin-left: 15px" >
             <div class="card  p-3">
-                <div class="header">
+                <div class="card-header">
                     Content
                 </div>
                 <hr>
             </div>
+            <div class="card-body mt-2">
+                <div class="articles">
+                    @foreach($user->articles as $article)
+                        <div class="p-2">
+                            <div class="article_image" style="width: 100%;">
+                                <img src="{{asset('storage/articles/'.$article->image)}}" class="rounded" width="100%" height="400px" alt="">
+                            </div>
+                            <div class="article_section_details d-flex justify-content-between mt-4">
+                                <div><h3 class="font-weight-bold"><a href="" class="text-dark">{{$article->title}}</a></h3>
+                                </div>
+                                <div class="font-weight-bold"> Author : <span class="text-success">{{$article->user->name}}</span></div>
+                            </div>
+                            <div class="article_content p-2 ">
+                                <p>{{$article->content}}</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <div class="font-weight-bold btn btn-primary">More... </div>
+                                <div>
+                                    <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         <div style="flex:1;margin-left: 15px">
             <div class="card  p-3">
-                <div class="header">
+                <div class="card-header">
                     AboutMe
                 </div>
                 <hr>
