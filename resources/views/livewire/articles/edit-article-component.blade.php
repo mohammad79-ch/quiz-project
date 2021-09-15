@@ -1,27 +1,25 @@
 <div>
+
     <div style="padding: 10px;width:800px;margin:30px auto;border: 1px solid #ccc;border-radius: 7px">
-        <div class="mb-3 d-flex font-weight-bold justify-content-between">
-            <div> Add Article</div>
-            <div>
-                <a href="/articles">All articles</a>
-            </div>
+        <div class="mb-3 font-weight-bold">
+            Add Article
         </div>
         <div>
-            @if(session('createArticle'))
+            @if(session('editArticle'))
                 <div>
-                    <p class="text-success font-weight-bold">{{session('createArticle')}}</p>
+                    <p class="text-success font-weight-bold">{{session('editArticle')}}</p>
                 </div>
             @endif
-            <form wire:submit.prevent="createArticle">
+            <form wire:submit.prevent="editArticle">
                 <div class="form-group">
-                    <input class="form-control" type="text" wire:model="title" placeholder="title">
+                    <input class="form-control" type="text" wire:model="title" value="{{old($article->tilte,'title')}}" placeholder="title">
                     @error('title')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <textarea wire:model="content" class="form-control" placeholder="Content"></textarea>
+                    <textarea wire:model="content" class="form-control"  placeholder="Content"></textarea>
                     @error('content')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
@@ -44,4 +42,5 @@
             </form>
         </div>
     </div>
+
 </div>

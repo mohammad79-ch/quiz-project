@@ -2,12 +2,21 @@
 
 namespace App\Http\Livewire\Articles;
 
+use App\Models\Article;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ArticleComponent extends Component
 {
+    use WithPagination;
+
     public function render()
     {
-        return view('livewire.articles.article-component')->layout('layouts.base');
+
+        $articles = Article::paginate(20);
+
+        return view('livewire.articles.article-component',compact('articles'))
+            ->layout('layouts.base');
+
     }
 }
