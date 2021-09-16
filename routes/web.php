@@ -37,7 +37,7 @@ Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 
 Route::get('/',[IndexController::class,'index']);
 
-Route::get('/articles',\App\Http\Livewire\Articles\ArticleComponent::class);
+Route::get('/articles',\App\Http\Livewire\Articles\ArticleComponent::class)->name('articles');
 Route::get('/article/add',\App\Http\Livewire\Articles\AddArticleComponent::class)->name('add.article');
 Route::get('/article/{article}/edit',\App\Http\Livewire\Articles\EditArticleComponent::class)->name('edit.article');
 Route::get('/article/{article}',\App\Http\Livewire\Articles\SingleArticleComponent::class)->name('single.article');
