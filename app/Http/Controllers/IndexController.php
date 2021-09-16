@@ -14,7 +14,6 @@ class IndexController extends Controller
     public function index()
     {
 
-
         $questions = Question::with('subQuestion','users')->get();
 
 

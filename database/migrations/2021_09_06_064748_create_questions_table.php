@@ -25,6 +25,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('question_user', function (Blueprint $table) {
 
             $table->boolean('select_level')->default(0);
+            $table->integer('is_correct')->nullable();
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')
                 ->on('questions')
