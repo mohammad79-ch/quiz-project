@@ -15,7 +15,7 @@ class FollowComponent extends Component
     public $followingCount ;
     public $followings ;
 
-    public $isFollowinBy;
+    public $isFollowinBy = null;
 
     public function follow()
     {
@@ -49,7 +49,10 @@ class FollowComponent extends Component
         $this->followerCount = $this->user->followers->count();
         $this->followings = $this->user->following;
         $this->followingCount = $this->user->following->count();
-        $this->isFollowinBy = $this->user->isFollowinBy(auth()->user());
+
+        if (auth()->check()){
+            $this->isFollowinBy = $this->user->isFollowinBy(auth()->user());
+        }
 
         return view('livewire.follow-component');
     }
