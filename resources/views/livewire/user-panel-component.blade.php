@@ -26,7 +26,7 @@
                             </p></div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <div><p style="font-size: 12px">Correct Answer</p></div>
+                        <div><p style="font-size: 12px">Wrong Answer</p></div>
                         <div><p class="bg-danger text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">
                                 {{$wrongAnswer}}
                             </p></div>
@@ -62,7 +62,7 @@
                                 <div ><a href="{{route('single.article',$article->id)}}" class="font-weight-bold btn btn-primary">More... </a></div>
                                 <div>
                                     <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
-                                    <span class=" mr-2"><a href="{{route('edit.article',$article)}}" class="font-weight-bold text-warning">Edit</a></span>
+                                    <span class=" mr-2"><a href="{{route('edit.article',$article->slug)}}" class="font-weight-bold text-warning">Edit</a></span>
                                 </div>
                             </div>
 

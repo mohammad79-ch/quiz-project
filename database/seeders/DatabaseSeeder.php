@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Question;
 use App\Models\SubQuestion;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        Question::factory(1)->create();
-        SubQuestion::factory(4)->create();
+        $question = Question::factory()->create();
+         SubQuestion::factory(4)->create(['question_id'=>$question->id]);
     }
+
 }

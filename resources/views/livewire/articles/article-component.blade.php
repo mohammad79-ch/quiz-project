@@ -22,7 +22,9 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <div class="font-weight-bold btn btn-primary">More... </div>
+                    <div class="font-weight-bold btn btn-primary">
+                        <a href="{{route('single.article',$article->slug)}}" class="font-weight-bold text-white">More ...</a>
+                    </div>
                     <div>
                        <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
                     </div>

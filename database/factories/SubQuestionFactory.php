@@ -22,10 +22,12 @@ class SubQuestionFactory extends Factory
      */
     public function definition()
     {
+        $question = Question::find(17);
         return [
             'title' =>$this->faker->words(3,true),
-            'question_id'=> Question::find(3)->id,
+            'question_id'=> $question->id,
             'is_answer' => 0
         ];
+
     }
 }
