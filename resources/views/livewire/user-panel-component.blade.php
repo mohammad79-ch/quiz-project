@@ -11,7 +11,6 @@
                         <div class="text-center mt-3">
                             <img src="{{!is_null($user->image) ? asset('userImg/'.$user->image) : asset('images/defUser.png')}}" width="50" alt="">
                         </div>
-
                         @livewire('follow-component',['user'=>$user])
 
 
@@ -59,7 +58,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <div ><a href="{{route('single.article',$article->id)}}" class="font-weight-bold btn btn-primary">More... </a></div>
+                                <div ><a href="{{route('single.article',$article->slug)}}" class="font-weight-bold btn btn-primary">More... </a></div>
                                 <div>
                                     <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
                                     <span class=" mr-2"><a href="{{route('edit.article',$article->slug)}}" class="font-weight-bold text-warning">Edit</a></span>
