@@ -21,6 +21,13 @@
                 </div>
 
                 <div class="form-group">
+                    <input class="form-control" type="text" wire:model="slug" placeholder="slug">
+                    @error('slug')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <textarea wire:model="content" class="form-control" placeholder="Content"></textarea>
                     @error('content')
                     <span class="text text-danger">{{$message}}</span>

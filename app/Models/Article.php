@@ -11,13 +11,19 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = [
-      'title','status',
-      'content','image',
-      'user_id'
+        'title', 'status',
+        'content', 'image',
+        'user_id',
+        'slug'
     ];
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
