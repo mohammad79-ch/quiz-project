@@ -14,7 +14,8 @@ class Article extends Model
         'title', 'status',
         'content', 'image',
         'user_id',
-        'slug'
+        'slug',
+        'category_id'
     ];
 
     public function user(): BelongsTo
@@ -30,6 +31,11 @@ class Article extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
 }
