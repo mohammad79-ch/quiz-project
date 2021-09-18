@@ -35,6 +35,18 @@
                 </div>
 
                 <div class="form-group">
+                    <select wire:model="category_id" class="form-control">
+                       @foreach(\App\Models\Category::all() as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('content')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
+
+                <div class="form-group">
                     <input class="form-control" type="file" wire:model="image">
                     @error('file')
                     <span class="text text-danger">{{$message}}</span>

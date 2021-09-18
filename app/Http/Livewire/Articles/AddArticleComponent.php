@@ -16,6 +16,7 @@ class AddArticleComponent extends Component
     public $image;
     public $status;
     public $slug;
+    public $category_id;
 
     protected $rules = [
         'title' => 'required|min:5',
@@ -23,6 +24,7 @@ class AddArticleComponent extends Component
         'image' => 'required|mimes:jpeg,jpg,png,gif,webp|required|max:10000',
         'status' => 'required',
         'slug' => 'required',
+        'category_id' => 'required',
     ];
 
     public function createArticle()
@@ -39,7 +41,8 @@ class AddArticleComponent extends Component
             'content' => $this->content,
             'image' => $imageName,
             'status' => $this->status,
-            'slug' => Str::slug($this->slug)
+            'slug' => Str::slug($this->slug),
+            'category_id'=>$this->category_id
         ]);
 
         session()->flash('createArticle', 'Article has been created successfully');
