@@ -32,10 +32,19 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <div class="font-weight-bold btn btn-primary">
-                            <a href="{{route('single.article',$article->slug)}}" class="font-weight-bold text-white">More
-                                ...</a>
+                        <div class="align-items-center  d-flex font-weight-bold ">
+                            <div>
+                                <a href="{{route('single.article',$article->slug)}}"
+                                    class="font-weight-bold text-white btn btn-primary">More
+                                    ...</a>
+                            </div>
+                                <div style="margin-left: 10px">
+                                    @foreach($article->tags as $tag)
+                                        <a href="" class="font-weight-bold ml-3 text-dark">#{{$tag->name}}</a>
+                                    @endforeach
+                                </div>
                         </div>
+
                         <div>
                             <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
                         </div>

@@ -49,12 +49,11 @@
                     @enderror
                 </div>
 
-                <label for="">Tag</label>
+                <label for="">Tags</label>
+                <br>
+                <span>Note: every tag must started with # </span>
                 <div class="form-group">
-                    <select wire:model="tags" class="form-control tag_select2" multiple="multiple">
-                        <option value="">ewfe</option>
-                        <option value="">ewf3ewfe</option>
-                    </select>
+                        <input type="text" wire:model="tags" class="form-control" placeholder="#programmer#web">
                     @error('tags')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
@@ -82,11 +81,3 @@
         </div>
     </div>
 </div>
-
-@section('script')
-    <script>
-        $(document).ready(function() {
-            $('.tag_select2').select2();
-        });
-    </script>
-@endsection

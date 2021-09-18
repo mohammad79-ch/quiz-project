@@ -16,7 +16,7 @@ class ArticleComponent extends Component
 
     public function render()
     {
-        $articles = Article::with(['user','category'])->whereStatus(1);
+        $articles = Article::with(['user','category','tags'])->whereStatus(1);
 
         if ($this->order == "oldest"){
             $articles = $articles->oldest();
