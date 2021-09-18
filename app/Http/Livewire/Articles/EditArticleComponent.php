@@ -19,13 +19,15 @@ class EditArticleComponent extends Component
     public $newImage;
     public $slug;
     public $category_id;
+    public $tags;
 
     protected $rules = [
         'title' => 'required|min:2',
         'content' => 'required|min:2',
         'newImage' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
         'status' => 'required',
-        'category_id' => 'required'
+        'category_id' => 'required',
+        'tags' => 'required'
     ];
 
     public function mount(Article $article)
@@ -36,11 +38,21 @@ class EditArticleComponent extends Component
         $this->status = $article->status;
         $this->image = $article->image;
         $this->slug = $article->slug;
+        $this->category_id = $article->category->id;
+        $this->tags = implode('#',$article->tags->pluck('name')->toArray());
+
     }
 
     public function editArticle()
     {
         $this->validate();
+
+        $tags = explode('#', $this->tags);
+
+        $this->tags = [];
+        foreach ($tags as $tag => $key) {
+            $this->tags[] = \App\Models\Tag::firstOrCreate(['name' => $key]);
+        }
 
         if (!is_null($this->newImage)) {
             if (File::exists(public_path('storage/articles/' . $this->image))) {
@@ -55,7 +67,7 @@ class EditArticleComponent extends Component
         }
 
 
-        $this->article->update([
+         $this->article->update([
             'title' => $this->title,
             'content' => $this->content,
             'image' => $this->image,
@@ -63,6 +75,9 @@ class EditArticleComponent extends Component
             'slug' => $this->slug,
             'category_id'=>$this->category_id
         ]);
+
+        $this->article->tags()->sync(collect($this->tags)->pluck('id'));
+        $this->tags = [];
 
         session()->flash('editArticle', 'Article has been updated successfully');
     }

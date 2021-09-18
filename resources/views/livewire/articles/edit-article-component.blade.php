@@ -14,7 +14,8 @@
                 <label for="">Title</label>
 
                 <div class="form-group">
-                    <input class="form-control" type="text" wire:model="title" value="{{old('title',$title)}}" placeholder="title">
+                    <input class="form-control" type="text" wire:model="title" value="{{old('title',$title)}}"
+                           placeholder="title">
                     @error('title')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
@@ -22,15 +23,16 @@
                 <label for="">Slug</label>
 
                 <div class="form-group">
-                    <input class="form-control" type="text" wire:model="slug" value="{{old('slug',$slug)}}" placeholder="slug">
+                    <input class="form-control" type="text" wire:model="slug" value="{{old('slug',$slug)}}"
+                           placeholder="slug">
                     @error('slug')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
                 <label for="">Content</label>
 
-                <div class="form-group" >
-                    <textarea wire:model="content" class="form-control"  placeholder="Content">{{$content}}</textarea>
+                <div class="form-group">
+                    <textarea wire:model="content" class="form-control" placeholder="Content">{{$content}}</textarea>
                     @error('content')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
@@ -41,14 +43,27 @@
                 <div class="form-group">
                     <select wire:model="category_id" class="form-control">
                         @foreach(\App\Models\Category::all() as $category)
-                        <option value="">Select Category</option>
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                            <option value="">Select Category</option>
+                            <option value="{{$category->id}}"
+                            @if($category->id ==  $category_id) selected @endif >
+                                {{$category->name}}
+                            </option>
                         @endforeach
                     </select>
                     @error('category_id')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                <label for="">Tags</label>
+                <br>
+                <span>Note: every tag must started with # </span>
+                <div class="form-group">
+                    <input type="text" wire:model="tags" value="{{$tags}}" class="form-control" placeholder="#programmer#web">
+                    @error('tags')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
 
                 <label for="">Image</label>
 

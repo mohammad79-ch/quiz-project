@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class AddArticleComponent extends Component
 {
@@ -17,6 +18,7 @@ class AddArticleComponent extends Component
     public $status;
     public $slug;
     public $category_id;
+    public $tags;
 
     protected $rules = [
         'title' => 'required|min:5',
@@ -31,12 +33,14 @@ class AddArticleComponent extends Component
     {
         $this->validate();
 
+        $this->getOrCreateTag();
+
         $imageName = md5($this->image . microtime()) . '.' . $this->image->extension();
 
         $this->image->storeAs('articles', $imageName);
 
 
-        auth()->user()->articles()->create([
+        $article = auth()->user()->articles()->create([
             'title' => $this->title,
             'content' => $this->content,
             'image' => $imageName,
@@ -45,6 +49,11 @@ class AddArticleComponent extends Component
             'category_id'=>$this->category_id
         ]);
 
+        $article->tags()->sync(collect($this->tags)->pluck('id'));
+
+
+        $this->tags = [];
+
         session()->flash('createArticle', 'Article has been created successfully');
     }
 
@@ -52,5 +61,14 @@ class AddArticleComponent extends Component
     public function render()
     {
         return view('livewire.articles.add-article-component')->layout('layouts.base');
+    }
+
+    public function getOrCreateTag(): void
+    {
+        $tags = explode('#', $this->tags);
+        $this->tags = [];
+        foreach ($tags as $tag => $key) {
+            $this->tags[] = \App\Models\Tag::firstOrCreate(['name' => $key]);
+        }
     }
 }

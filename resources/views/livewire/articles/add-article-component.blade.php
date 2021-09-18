@@ -49,6 +49,16 @@
                     @enderror
                 </div>
 
+                <label for="">Tags</label>
+                <br>
+                <span>Note: every tag must started with # </span>
+                <div class="form-group">
+                        <input type="text" wire:model="tags" class="form-control" placeholder="#programmer#web">
+                    @error('tags')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
                 <label for="">Image</label>
 
                 <div class="form-group">
