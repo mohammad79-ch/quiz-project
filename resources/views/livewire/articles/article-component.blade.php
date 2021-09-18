@@ -1,7 +1,13 @@
 <div>
     <div class="container p-3">
         <div class="d-flex justify-content-between">
-            <div>Filter</div>
+            <div class="d-flex justify-content-between align-items-center">
+                <strong style="margin-right: 10px">Filter</strong>
+            Latest Articles
+                <input type="radio" wire:model="order"  style="margin-right: 10px" name="order" value="latest">
+            Oldest Articles
+                <input type="radio" wire:model="order"  value="oldest" name="order">
+            </div>
             <div>
                 <a href="{{route('add.article')}}" class="font-weight-bold">Add new article</a>
             </div>
