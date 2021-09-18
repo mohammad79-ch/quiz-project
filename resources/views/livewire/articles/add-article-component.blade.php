@@ -49,6 +49,17 @@
                     @enderror
                 </div>
 
+                <label for="">Tag</label>
+                <div class="form-group">
+                    <select wire:model="tags" class="form-control tag_select2" multiple="multiple">
+                        <option value="">ewfe</option>
+                        <option value="">ewf3ewfe</option>
+                    </select>
+                    @error('tags')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
                 <label for="">Image</label>
 
                 <div class="form-group">
@@ -71,3 +82,11 @@
         </div>
     </div>
 </div>
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('.tag_select2').select2();
+        });
+    </script>
+@endsection

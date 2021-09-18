@@ -17,6 +17,7 @@ class AddArticleComponent extends Component
     public $status;
     public $slug;
     public $category_id;
+    public $tags = [];
 
     protected $rules = [
         'title' => 'required|min:5',

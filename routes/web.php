@@ -1,5 +1,9 @@
 <?php
 
+// TODO add the tag to articles
+// TODO show the all tag that belong to articles
+
+
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
