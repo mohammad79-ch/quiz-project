@@ -13,13 +13,15 @@
                 </div>
             @endif
             <form wire:submit.prevent="createArticle">
+
+                <label for="">Category</label>
                 <div class="form-group">
                     <input class="form-control" type="text" wire:model="title" placeholder="title">
                     @error('title')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
-
+                <label for="">Slug</label>
                 <div class="form-group">
                     <input class="form-control" type="text" wire:model="slug" placeholder="slug">
                     @error('slug')
@@ -27,6 +29,7 @@
                     @enderror
                 </div>
 
+                <label for="">Content</label>
                 <div class="form-group">
                     <textarea wire:model="content" class="form-control" placeholder="Content"></textarea>
                     @error('content')
@@ -34,17 +37,19 @@
                     @enderror
                 </div>
 
+                <label for="">Category</label>
                 <div class="form-group">
                     <select wire:model="category_id" class="form-control">
                        @foreach(\App\Models\Category::all() as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
-                    @error('content')
+                    @error('category_id')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
 
+                <label for="">Image</label>
 
                 <div class="form-group">
                     <input class="form-control" type="file" wire:model="image">
@@ -52,6 +57,8 @@
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+
+                <label for="">status</label>
 
                 <div class="form-group">
                     <select wire:model="status" class="form-control">

@@ -11,12 +11,15 @@
                 </div>
             @endif
             <form wire:submit.prevent="editArticle">
+                <label for="">Title</label>
+
                 <div class="form-group">
                     <input class="form-control" type="text" wire:model="title" value="{{old('title',$title)}}" placeholder="title">
                     @error('title')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                <label for="">Slug</label>
 
                 <div class="form-group">
                     <input class="form-control" type="text" wire:model="slug" value="{{old('slug',$slug)}}" placeholder="slug">
@@ -24,13 +27,30 @@
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                <label for="">Content</label>
 
-                <div class="form-group">
+                <div class="form-group" >
                     <textarea wire:model="content" class="form-control"  placeholder="Content">{{$content}}</textarea>
                     @error('content')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+
+                <label for="">Category</label>
+
+                <div class="form-group">
+                    <select wire:model="category_id" class="form-control">
+                        @foreach(\App\Models\Category::all() as $category)
+                        <option value="">Select Category</option>
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                    <span class="text text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+
+                <label for="">Image</label>
 
                 <div class="form-group">
                     <div class="mb-2 text-center">
@@ -41,6 +61,8 @@
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+
+                <label for="">Status</label>
 
                 <div class="form-group">
                     <select wire:model="status" class="form-control">

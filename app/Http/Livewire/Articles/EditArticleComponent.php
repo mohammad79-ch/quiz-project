@@ -18,12 +18,14 @@ class EditArticleComponent extends Component
     public $status;
     public $newImage;
     public $slug;
+    public $category_id;
 
     protected $rules = [
         'title' => 'required|min:2',
         'content' => 'required|min:2',
         'newImage' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
-        'status' => 'required'
+        'status' => 'required',
+        'category_id' => 'required'
     ];
 
     public function mount(Article $article)
@@ -58,7 +60,8 @@ class EditArticleComponent extends Component
             'content' => $this->content,
             'image' => $this->image,
             'status' => $this->status,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'category_id'=>$this->category_id
         ]);
 
         session()->flash('editArticle', 'Article has been updated successfully');
