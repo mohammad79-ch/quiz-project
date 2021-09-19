@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class CommentComponent extends Component
 {
+    protected $listeners = ['commentRefresh'=>'$refresh'];
+
     public $article;
     public $content;
 
@@ -23,6 +25,7 @@ class CommentComponent extends Component
            'commentable_type'=>get_class($this->article)
         ]);
 
+        $this->emit('commentRefresh');
         session()->flash('successComment','Comment sent ');
     }
     public function render()

@@ -13,6 +13,9 @@
                 <div class="form-group">
                     <textarea wire:model="content" placeholder="say something ..." class="form-control" cols="30"
                               rows="10"></textarea>
+                    @error('content')
+                        <span class="text-danger font-weight-bold">{{$message}}</span>
+                    @enderror
                 </div>
                 <input type="submit" class="btn btn-primary mb-2" value="send">
             </form>
