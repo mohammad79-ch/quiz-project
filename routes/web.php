@@ -8,7 +8,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\SubQuestionController;
 use App\Http\Livewire\FollowComponent;
-use App\Http\Livewire\UserPanelComponent;
+use App\Http\Livewire\ProfileComponent;
 use App\Http\Livewire\UserStoryComponent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +31,7 @@ Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
 
-Route::get('profile/@{profile}', UserPanelComponent::class)->name('profile');
+Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
 
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');

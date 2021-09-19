@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Question;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -32,17 +33,26 @@ class UserTopComponent extends Component
     {
         $questions = Question::with('subQuestion','users')->get();
 
-        $users = [];
+        $usersId = [];
 
         foreach ($questions as $question){
-            foreach ($question->users as $user){
-                $correctAnswer= $user->questions->filter(fn($q) => $q->pivot->is_correct)->count();
-                $users[] = ['profile'=>$user->profile,'name'=>$user->name,'correctAnswer'=>$correctAnswer];
-            }
+            $usersId[] = $question->users->pluck('id')->toArray();
+
+        }
+
+       $usersId = collect($usersId)->collapse()->unique();
+
+        $u = User::with('questions')->whereIn('id',$usersId)->get();
+
+        $users = [];
+
+            foreach ($u as $user) {
+                $correctAnswer = $user->questions->filter(fn($q)=>  $q->pivot->is_correct)->count();
+
+                $users[] = ['profile' => $user->profile, 'name' => $user->name, 'correctAnswer' => $correctAnswer];
         }
 
         $users=collect($users)->unique('name')->sortByDesc('correctAnswer')->all();
-
 
         $users=$this->paginate($users,10);
 

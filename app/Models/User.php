@@ -38,6 +38,12 @@ class User extends Authenticatable
         return $this->hasMany(Image::class);
     }
 
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class,'question_user')
+            ->withPivot(['select_level','is_correct']);
+    }
+
     public function articles() : HasMany
     {
         return $this->hasMany(Article::class);
