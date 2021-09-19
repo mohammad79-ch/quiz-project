@@ -31,6 +31,6 @@ class ArticleComponent extends Component
 
         return view('livewire.articles.article-component',compact('articles'))
             ->layout('layouts.base');
-
     }
+
 }

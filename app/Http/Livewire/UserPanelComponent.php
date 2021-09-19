@@ -30,4 +30,5 @@ class UserPanelComponent extends Component
                 compact('user', 'totalAnswer', 'correctAnswer', 'wrongAnswer'))
                 ->layout('layouts.base');
         }
+
 }

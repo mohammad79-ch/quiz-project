@@ -31,6 +31,8 @@
                 </div>
             </div>
 
+            <hr>
+            @livewire('comment-component',['article'=>$article])
         </div>
     </div>
 </div>
