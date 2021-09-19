@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
     use HasApiTokens, HasFactory, Notifiable,Follow,DetailQuestion;
 
-    protected $with = ['questions'];
+//    protected $with = ['questions'];
 
 
     public function images() : HasMany

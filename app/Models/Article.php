@@ -18,6 +18,8 @@ class Article extends Model
         'category_id'
     ];
 
+    protected $with = ['comments'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
