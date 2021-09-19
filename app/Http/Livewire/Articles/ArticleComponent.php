@@ -16,15 +16,18 @@ class ArticleComponent extends Component
 
     public function render()
     {
-        $articles = Article::with(['user','category','tags'])->whereStatus(1);
+        $articles = [];
 
-        if ($this->order == "oldest"){
-            $articles = $articles->oldest();
-        }elseif ($this->order == "latest"){
-            $articles = $articles->latest();
+        $users = auth()->user()->following;
+
+        foreach ($users as $user){
+            foreach ($user->articles as $article){
+               $articles[] = $article;
+            }
         }
+        $articles = collect($articles)->pluck('id')->toArray();
 
-        $articles = $articles->paginate(20);
+        $articles = Article::with(['user','tags'])->whereIn('id',$articles)->paginate(20);
 
         return view('livewire.articles.article-component',compact('articles'))
             ->layout('layouts.base');

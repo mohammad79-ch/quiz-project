@@ -58,7 +58,7 @@
                 <br>
                 <span>Note: every tag must started with # </span>
                 <div class="form-group">
-                    <input type="text" wire:model="tags" value="{{$tags}}" class="form-control" placeholder="#programmer#web">
+                    <input type="text" wire:model="tags" value="" class="form-control" placeholder="#programmer#web">
                     @error('tags')
                     <span class="text text-danger">{{$message}}</span>
                     @enderror
