@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Articles;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,7 +13,15 @@ class ArticleComponent extends Component
 
     public $order;
 
+    public $tag ;
+
+
     protected $queryString = ['order'];
+
+    public function findTags($tag)
+    {
+        $this->tag = $tag;
+    }
 
     public function render()
     {
@@ -27,7 +36,11 @@ class ArticleComponent extends Component
         }
         $articles = collect($articles)->pluck('id')->toArray();
 
-        $articles = Article::with(['user','tags'])->whereIn('id',$articles)->paginate(20);
+        $articles = Article::with(['user','tags'])->whereIn('id',$articles)->paginate();
+
+        if ($this->tag){
+          $articles = Tag::where('name',$this->tag)->first()->articles;
+        }
 
         return view('livewire.articles.article-component',compact('articles'))
             ->layout('layouts.base');

@@ -28,7 +28,7 @@
                                 <div class="font-weight-bold d-flex flex-column">
                                     <div> Category : <span class="text-primary">{{$article->category->name}}</span>
                                     </div>
-                                    <div> Author : <span class="text-success ">{{$article->user->name}}</span></div>
+                                    <div> Author : <span class="text-success">{{$article->user->name}}</span></div>
                                 </div>
                             </div>
                             <div class="article_content p-2 ">
@@ -44,7 +44,7 @@
                                     </div>
                                     <div style="margin-left: 10px">
                                         @foreach($article->tags as $tag)
-                                            <a href="" class="font-weight-bold ml-3 text-dark">#{{$tag->name}}</a>
+                                            <a href=""  wire:click.prevent="findTags('{{$tag->name}}')" class="font-weight-bold ml-3 text-dark">#{{$tag->name}}</a>
                                         @endforeach
                                     </div>
                                 </div>

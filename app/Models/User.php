@@ -30,12 +30,18 @@ class User extends Authenticatable
     ];
     use HasApiTokens, HasFactory, Notifiable,Follow,DetailQuestion;
 
-    protected $with = ['questions'];
+//    protected $with = ['questions'];
 
 
     public function images() : HasMany
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class,'question_user')
+            ->withPivot(['select_level','is_correct']);
     }
 
     public function articles() : HasMany

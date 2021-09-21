@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 
-class UserPanelComponent extends Component
+class ProfileComponent extends Component
 {
 
     public $profile;
@@ -26,7 +26,7 @@ class UserPanelComponent extends Component
             $wrongAnswer = $user->getWrongAnswer();
 
 
-            return view('livewire.user-panel-component',
+            return view('livewire.profile-component',
                 compact('user', 'totalAnswer', 'correctAnswer', 'wrongAnswer'))
                 ->layout('layouts.base');
         }
