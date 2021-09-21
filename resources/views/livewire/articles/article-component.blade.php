@@ -26,7 +26,11 @@
                                     </h3>
                                 </div>
                                 <div class="font-weight-bold d-flex flex-column">
-                                    <div> Category : <span class="text-primary">{{$article->category->name}}</span>
+                                    <div> Category : <span class="text-primary">
+                                            <a href="" wire:click.prevent="findCategories('{{$article->category->name}}')">
+                                                {{$article->category->name}}
+                                            </a>
+                                        </span>
                                     </div>
                                     <div> Author : <span class="text-success">{{$article->user->name}}</span></div>
                                 </div>
