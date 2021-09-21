@@ -3,7 +3,26 @@
        <h3 class="font-weight-bold ">{{$article->title}}</h3>
    </div>
     <div class="d-flex mt-3 mb-3 p-2" style="width:98%;margin:0 auto;">
-        <div style="flex: 1;border: 1px solid #ccc;border-radius: 7px;height:400px;">show 5 Similar  articles</div>
+        <div style="flex: 1;height:400px;">
+            @foreach($relativeCollection as $rel)
+            <div style="width: 100%;height: auto;border-radius:10px;border: 1px solid #ccc">
+                <div>
+                    <img src="{{asset('/storage/articles/'.$rel->image)}}" width="100%" height="50%" alt="">
+                </div>
+                <div class="p-2">
+                    <h3 style="font-size: 19px">{{$rel->title}}</h3>
+                    <p class="mt-3">{{$rel->content}}</p>
+                </div>
+                <div class="mt-2 d-flex justify-content-between mb-2 p-2">
+                    <div><a href="" class="text-primary font-weight-bold" >More ...</a></div>
+                    <div>
+                        <span class="font-weight-bold">{{$rel->created_at->diffForHumans()}}</span>
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+        </div>
 
         <div style="flex:2.75;border: 1px solid #ccc;border-radius:8px;margin-left:9px">
             <div class="articles">
