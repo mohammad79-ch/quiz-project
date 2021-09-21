@@ -14,10 +14,12 @@
                     <p class="mt-3">{{$rel->content}}</p>
                 </div>
                 <div class="mt-2 d-flex justify-content-between mb-2 p-2">
-                    <div><a href="" class="text-primary font-weight-bold" >More ...</a></div>
+                    <div><a href="{{route('single.article',$rel)}}" class="text-primary font-weight-bold" >More ...</a></div>
                     <div>
                         <span class="font-weight-bold">{{$rel->created_at->diffForHumans()}}</span>
                     </div>
+
+
                 </div>
 
             </div>
@@ -41,10 +43,18 @@
                     <div class="d-flex justify-content-between">
                         <div class="font-weight-bold ml-2"> Author : <span class="text-success">{{$article->user->name}}</span></div>
                         {{--                       <div ><a href="{{route('single.article',$article->id)}}" class="font-weight-bold btn btn-primary">More... </a></div>--}}
+
+                        <div style="margin-left: 10px">
+                            @foreach($article->tags as $tag)
+                                <a class="font-weight-bold ml-3 text-dark">#{{$tag->name}}</a>
+                            @endforeach
+                        </div>
+
                         <div>
                             <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
                             {{--                           <span class=" mr-2"><a href="{{route('edit.article',$article)}}" class="font-weight-bold text-warning">Edit</a></span>--}}
                         </div>
+
                     </div>
 
                 </div>
