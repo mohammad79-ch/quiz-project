@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Articles;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,12 +16,19 @@ class ArticleComponent extends Component
 
     public $tag ;
 
+    public $category ;
+
 
     protected $queryString = ['order'];
 
     public function findTags($tag)
     {
         $this->tag = $tag;
+    }
+
+    public function findCategories($category)
+    {
+        $this->category =  $category;
     }
 
     public function render()
@@ -40,6 +48,13 @@ class ArticleComponent extends Component
 
         if ($this->tag){
           $articles = Tag::where('name',$this->tag)->first()->articles;
+        }
+
+        if ($this->category){
+            $category = Category::where('name',$this->category)->first();
+            if (!is_null($category)){
+                $articles = $category->articles;
+            }
         }
 
         return view('livewire.articles.article-component',compact('articles'))
