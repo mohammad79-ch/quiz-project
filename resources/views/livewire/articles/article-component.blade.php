@@ -10,6 +10,7 @@
                         Oldest Articles
                         <input type="radio" wire:model="order" value="oldest" name="order">
                     </div>
+
                     <div>
                         <a href="{{route('add.article')}}" class="font-weight-bold">Add new article</a>
                     </div>
