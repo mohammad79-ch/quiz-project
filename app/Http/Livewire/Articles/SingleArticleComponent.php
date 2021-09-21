@@ -17,18 +17,20 @@ class SingleArticleComponent extends Component
 
     public function render()
     {
-        $this->relative = Tag::whereIn('id',$this->article->tags->pluck('id')->toArray())->first()->articles ;
+        $this->relative = Tag::whereIn('id',$this->article->tags->pluck('id')->toArray())->get() ;
+
 
         $relative = [];
 
         foreach ($this->relative as $rel){
-            if ($rel->title != $this->article->title){
-                $relative[] = $rel;
-            }
+          foreach ($rel->articles as $article){
+              $relative[]= $article;
+          }
         }
 
-        $relativeCollection = $relative;
+        $relativeCollection = collect($relative)->unique('id');
 
+        $relativeCollection = $relativeCollection->filter(fn($item) => $item->title != $this->article->title );
 
         return view('livewire.articles.single-article-component',compact('relativeCollection'))
             ->layout('layouts.base');
