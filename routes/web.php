@@ -46,6 +46,7 @@ Route::get('/article/{article}',\App\Http\Livewire\Articles\SingleArticleCompone
 
 
 Route::get('/log', function () {
+//   return \auth()->loginUsingId(4);
      auth()->logout();
 });
 
