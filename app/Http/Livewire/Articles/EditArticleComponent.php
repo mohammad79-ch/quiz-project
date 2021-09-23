@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Articles;
 
 use App\Models\Article;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class EditArticleComponent extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads,AuthorizesRequests;
 
     public $article;
     public $title;
@@ -32,6 +33,7 @@ class EditArticleComponent extends Component
 
     public function mount(Article $article)
     {
+        $this->authorize('delete',$this->article);
         $this->article = $article;
         $this->title = $article->title;
         $this->content = $article->content;

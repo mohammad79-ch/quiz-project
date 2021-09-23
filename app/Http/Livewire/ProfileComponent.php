@@ -2,17 +2,28 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Article;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class ProfileComponent extends Component
 {
+
+    use AuthorizesRequests;
 
     public $profile;
 
     public function mount($profile)
     {
         $this->profile = $profile;
+    }
+
+    public function deleteArticle($slug)
+    {
+       $article = Article::whereSlug($slug)->first();
+        $this->authorize('delete',$article);
+        $article->delete();
     }
 
     public function render()

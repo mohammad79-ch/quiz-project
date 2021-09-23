@@ -64,7 +64,10 @@
                                 <div ><a href="{{route('single.article',$article->slug)}}" class="font-weight-bold btn btn-primary">More... </a></div>
                                 <div>
                                     <span class="font-weight-bold">{{$article->created_at->diffForHumans()}}</span>
-                                    <span class=" mr-2"><a href="{{route('edit.article',$article->slug)}}" class="font-weight-bold text-warning">Edit</a></span>
+                                    @can('delete',$article)
+                                        <span class=" mr-2"><a href="{{route('edit.article',$article->slug)}}" class="font-weight-bold text-warning">Edit</a></span>
+                                        <span class=" mr-2"><a href=""  wire:click.prevent="deleteArticle('{{$article->slug}}')" class="font-weight-bold text-danger">del</a></span>
+                                    @endcan
                                 </div>
                             </div>
 
