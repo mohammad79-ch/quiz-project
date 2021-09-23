@@ -15,7 +15,7 @@
     <div class="d-flex justify-content-around mt-3">
             <a id="followerCount">{{$followerCount}}</a>
         <a id="followingCount">{{$followingCount}}</a>
-        <p>5</p>
+        <p>{{$user->articles->count()}}</p>
     </div>
         @auth
             @if(auth()->user()->id != $user->id )
