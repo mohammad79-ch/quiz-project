@@ -6,8 +6,9 @@
             <input type="file" wire:model="photo" class="form-control  form-control-file" >
             <a href=""></a>
 
-            <input type="submit" id="choose_photo" value="publish" class="btn btn-success ">
-              <p class="d-none">کمی صبر کنید 3</p>
+            <input type="submit" id="choose_photo" wire:loading.remove value="publish" class="btn btn-success ">
+            <a  class="btn btn-waring" wire:loading> Loading Story ...</a>
+
         </div>
         @error('photo') <span class="text-danger font-weight-bold">{{$message}}</span> @enderror
     </form>
