@@ -36,7 +36,6 @@ Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 });
-
 Route::get('/',[IndexController::class,'index']);
 
 Route::get('/articles',\App\Http\Livewire\Articles\ArticleComponent::class)->name('articles');
