@@ -44,7 +44,15 @@ class ArticleComponent extends Component
         }
         $articles = collect($articles)->pluck('id')->toArray();
 
-        $articles = Article::with(['user','tags'])->whereIn('id',$articles)->paginate();
+        $articles = Article::with(['user','tags'])->whereIn('id',$articles);
+
+        if ($this->order == 'oldest'){
+            $articles = $articles->oldest();
+        }else{
+            $articles = $articles->latest();
+        }
+
+           $articles = $articles->paginate();
 
         if ($this->tag){
           $articles = Tag::where('name',$this->tag)->first()->articles;
@@ -56,6 +64,10 @@ class ArticleComponent extends Component
                 $articles = $category->articles;
             }
         }
+
+
+
+
 
         return view('livewire.articles.article-component',compact('articles'))
             ->layout('layouts.base');
