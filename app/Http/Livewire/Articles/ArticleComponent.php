@@ -16,10 +16,12 @@ class ArticleComponent extends Component
 
     public $tag ;
 
+    public $search ;
+
     public $category ;
 
 
-    protected $queryString = ['order'];
+    protected $queryString = ['order','search'];
 
     public function findTags($tag)
     {
@@ -44,7 +46,13 @@ class ArticleComponent extends Component
         }
         $articles = collect($articles)->pluck('id')->toArray();
 
-        $articles = Article::with(['user','tags'])->whereIn('id',$articles)->paginate();
+        $articles = Article::with(['user','tags'])->whereIn('id',$articles);
+
+        if ($this->order == 'oldest'){
+            $articles = $articles->oldest()->get();
+        }else{
+            $articles = $articles->latest()->get();
+        }
 
         if ($this->tag){
           $articles = Tag::where('name',$this->tag)->first()->articles;
@@ -55,6 +63,10 @@ class ArticleComponent extends Component
             if (!is_null($category)){
                 $articles = $category->articles;
             }
+        }
+
+        if($this->search){
+        $articles = Article::where('title','LIKE',"%{$this->search}%")->get();
         }
 
         return view('livewire.articles.article-component',compact('articles'))

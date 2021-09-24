@@ -10,7 +10,9 @@
                         Oldest Articles
                         <input type="radio" wire:model="order" value="oldest" name="order">
                     </div>
-
+                    <div style="flex: 1;margin: 0 25px">
+                        <input type="text" wire:model="search" placeholder="Search in articles" class="form-control">
+                    </div>
                     <div>
                         <a href="{{route('add.article')}}" class="font-weight-bold">Add new article</a>
                     </div>
