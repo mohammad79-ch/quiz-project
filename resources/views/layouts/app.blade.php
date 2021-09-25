@@ -49,6 +49,7 @@
         <div><a href="{{route('profile',auth()->user()->profile)}}" class="text-white">Name
                 : {{auth()->user()->name}}</a></div>
         <div>
+            <a href="{{route('discuss')}}" class="text-white">Discuss</a>
             <a href="{{route('admin.dashboard')}}" class="text-white">Dashboard</a>
             <a href="{{route('articles')}}" class="font-weight-bold text-white">Articles</a>
             <a href="/" class="font-weight-bold text-white">Home</a>
