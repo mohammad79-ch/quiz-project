@@ -60,11 +60,11 @@
 <div class="row" style="width:99%;margin: 10px auto">
     <div >
         <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
-            <a href="" class="btn btn-primary btn-block">Create new discuss</a>
+            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block">Create new discuss</a>
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
             @foreach($discusses as $discuss)
-            <div class="col-md-12" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+            <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="d-flex justify-content-between">
                     <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
                     <p>{{$discuss->created_at->diffForHumans()}}</p>
@@ -78,9 +78,9 @@
                     </div>
 
                     <div>
-                        <a href="">web</a>
-                        <a href="">programmer</a>
-                        <a href="">bug</a>
+                        @foreach($discuss->tags as $tag)
+                        <a class="font-weight-bold">{{$tag->name}}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>

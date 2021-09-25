@@ -35,4 +35,9 @@ class Discuss extends Model
     {
      return $this->belongsTo(Category::class);
     }
+
+    public function child()
+    {
+        return $this->hasMany(Discuss::class,'parent_id','id');
+    }
 }

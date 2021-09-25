@@ -36,16 +36,17 @@ Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
 
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
+Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss.create');
 });
 
 
 Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
-Route::get('discusses', [DiscussController::class,'index'])->name('discuss');
-Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss');
+Route::get('discuss', [DiscussController::class,'index'])->name('discuss');
 Route::post('discuss/store', [DiscussController::class,'store'])->name('discuss.store');
 Route::get('discuss/{discuss}', [DiscussController::class,'show'])->name('discuss.show');
+Route::post('discuss/{discuss}/replay', [DiscussController::class,'replay'])->name('discuss.replay');
 
 Route::get('/',[IndexController::class,'index']);
 

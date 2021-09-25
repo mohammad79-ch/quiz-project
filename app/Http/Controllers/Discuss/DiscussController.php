@@ -11,7 +11,7 @@ class DiscussController extends Controller
 {
     public function index()
     {
-        $discusses = Discuss::latest()->paginate();
+        $discusses = Discuss::where('parent_id',0)->latest()->paginate();
         return view('discusses.index',compact('discusses'));
     }
 
@@ -22,20 +22,49 @@ class DiscussController extends Controller
 
     public function show(Discuss $discuss)
     {
-        dd($discuss);
+        return view('discusses.show',compact('discuss'));
     }
     public function store(Request $request)
     {
-       $discuss =  Discuss::create([
-           'title' => $request->title,
-           'category_id'=> $request->category,
-           'user_id'=> auth()->user()->id,
-            'content'=> $request->content,
+        $data = $request->validate([
+           'title'=>'required',
+            'content'=>'required',
+            'category'=>'required',
+            'tags'=>'required',
         ]);
 
-//       $discuss->tags()->sync($request->tags);
+        $tags = explode('#', $request->tags);
+        $tagsAll = [];
+        foreach ($tags as $tag => $key) {
+            $tagsAll[] = \App\Models\Tag::firstOrCreate(['name' => $key]);
+        }
 
-//        dd($discuss);
+       $discuss =  Discuss::create([
+           'title' => $data['title'],
+           'category_id'=> $data['category'],
+           'user_id'=> auth()->user()->id,
+            'content'=> $data['content'],
+        ]);
 
+       $discuss->tags()->sync(collect($tagsAll)->pluck('id'));
+
+       return redirect()->route('discuss');
+    }
+
+    public function replay(Request $request,Discuss $discuss)
+    {
+        $data = $request->validate([
+            'content'=>'required',
+        ]);
+
+          Discuss::create([
+            'title' => $discuss->title,
+            'category_id'=> $discuss->category_id,
+            'user_id'=> auth()->user()->id,
+            'content'=> $data['content'],
+            'parent_id'=> $discuss->id
+        ]);
+
+        return back();
     }
 }
