@@ -69,6 +69,9 @@
                         <div class="form-group">
                             <label for="">Title</label>
                             <input type="text" name="title" class="form-control">
+                            @error('title')
+                           <span class="font-weight-bold text-danger"> {{$message}}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Category</label>
@@ -77,16 +80,25 @@
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
+                            @error('category')
+                            <span class="font-weight-bold text-danger"> {{$message}}</span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Content</label>
                             <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                            @error('content')
+                            <span class="font-weight-bold text-danger"> {{$message}}</span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Tag</label>
                             <input type="text" name="tags" placeholder="it should statrt with #  for example  #web#programmer" class="form-control">
+                            @error('tags')
+                            <span class="font-weight-bold text-danger"> {{$message}}</span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
