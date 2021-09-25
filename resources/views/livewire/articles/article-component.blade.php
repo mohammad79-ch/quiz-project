@@ -1,22 +1,25 @@
 <div>
     <div class="container p-3">
         @auth
-            @if(count($articles))
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <strong style="margin-right: 10px">Filter</strong>
-                        Latest Articles
-                        <input type="radio" wire:model="order" style="margin-right: 10px" name="order" value="latest">
-                        Oldest Articles
-                        <input type="radio" wire:model="order" value="oldest" name="order">
-                    </div>
-                    <div style="flex: 1;margin: 0 25px">
-                        <input type="text" wire:model="search" placeholder="Search in articles" class="form-control">
-                    </div>
-                    <div>
-                        <a href="{{route('add.article')}}" class="font-weight-bold">Add new article</a>
-                    </div>
+{{--            <div wire:poll>{{\Carbon\Carbon::now()}}</div>--}}
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong style="margin-right: 10px">Filter</strong>
+                    Latest Articles
+                    <input type="radio" wire:model="order" style="margin-right: 10px" name="order" value="latest">
+                    Oldest Articles
+                    <input type="radio" wire:model="order" value="oldest" name="order">
                 </div>
+                <div style="flex: 1;margin: 0 25px">
+                    <input type="text" wire:model="search" placeholder="Search in articles" class="form-control">
+                </div>
+                <div>
+                    <a href="{{route('add.article')}}" class="font-weight-bold">Add new article</a>
+                </div>
+            </div>
+
+        @if(count($articles))
                 <div class="articles" style="width: 800px;margin: 0 auto">
                     @foreach($articles as $article)
                         <div class="mt-3 p-5">

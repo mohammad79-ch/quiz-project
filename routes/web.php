@@ -3,10 +3,15 @@
 
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Discuss\DiscussController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\SubQuestionController;
+use App\Http\Livewire\Articles\AddArticleComponent;
+use App\Http\Livewire\Articles\ArticleComponent;
+use App\Http\Livewire\Articles\EditArticleComponent;
+use App\Http\Livewire\Articles\SingleArticleComponent;
 use App\Http\Livewire\FollowComponent;
 use App\Http\Livewire\ProfileComponent;
 use App\Http\Livewire\UserStoryComponent;
@@ -26,22 +31,25 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-
-Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
-
-
 Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
+
 
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 });
+
+
+Route::get('login/google', [LoginWithGoogleController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
+
+Route::get('discusses', [DiscussController::class,'index'])->name('discuss');
+
 Route::get('/',[IndexController::class,'index']);
 
-Route::get('/articles',\App\Http\Livewire\Articles\ArticleComponent::class)->name('articles');
-Route::get('/article/add',\App\Http\Livewire\Articles\AddArticleComponent::class)->name('add.article');
-Route::get('/article/{article}/edit',\App\Http\Livewire\Articles\EditArticleComponent::class)->name('edit.article');
-Route::get('/article/{article}',\App\Http\Livewire\Articles\SingleArticleComponent::class)->name('single.article');
+Route::get('/articles', ArticleComponent::class)->name('articles');
+Route::get('/article/add', AddArticleComponent::class)->name('add.article');
+Route::get('/article/{article}/edit', EditArticleComponent::class)->name('edit.article');
+Route::get('/article/{article}', SingleArticleComponent::class)->name('single.article');
 
 
 Route::get('/log', function () {

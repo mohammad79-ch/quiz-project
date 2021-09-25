@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+    public function discusses()
+    {
+        return $this->hasMany(Discuss::class);
+    }
 }

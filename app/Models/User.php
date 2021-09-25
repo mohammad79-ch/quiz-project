@@ -49,6 +49,20 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(comment::class);
+    }
+
+    public function discuss()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function discusses()
+    {
+        return $this->belongsToMany(Discuss::class,'votes')->withTimestamps();
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -69,8 +83,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function comments()
-    {
-        return $this->hasMany(comment::class);
-    }
 }
