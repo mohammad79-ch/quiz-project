@@ -90,26 +90,53 @@
                     </div>
                 </div>
                 <hr>
+                @foreach($discuss->child as $disChilds)
                 <div class="col-md-12 mt-3" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                    <div class="d-flex justify-content-between">
-                        <h3>title</h3>
-                        <p>5 minutes ago</p>
+                    <div class="d-flex">
+                        <div>
+                            <img
+                                src="{{asset(is_null($disChilds->user->image)) ?
+                                    asset('images/defUser.png') :
+                                     asset('images/icon/'.$disChilds->user->image) }}" width="50"
+                            >
+                        </div>
+                        <div style="margin-left: 10px">
+                            <h4 class="font-weight-bold" style="font-size: 16px">{{$disChilds->user->name}}</h4>
+                            <h4 class="font-weight-bold" style="font-size: 16px"><a href="{{route('profile',$disChilds->user->profile)}}">{{'@'.$disChilds->user->profile}}</a></h4>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid asperiores commodi modi provident repellendus totam voluptate. Accusantium amet consequuntur corporis et exercitationem id ipsam, nostrum omnis quod velit, veniam?</p>
+                        <p class="font-weight-bold">{{$disChilds->content}}<p>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <a class="btn btn-light">replay</a>
-                        </div>
+                    <div>
+                        <p>{{$disChilds->created_at->diffForHumans()}}</p>
 
-                        <div>
-                            <a href="">web</a>
-                            <a href="">programmer</a>
-                            <a href="">bug</a>
-                        </div>
                     </div>
                 </div>
+                @endforeach
+
+
+
+                <div class="col-md-12" style="border-radius: 10px ">
+                    <div class="col-md-12 mt-3" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                        <form action="{{route('discuss.replay',$discuss->id)}}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="">Content</label>
+                                <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                                @error('content')
+                                <span class="font-weight-bold text-danger"> {{$message}}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

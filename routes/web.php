@@ -46,6 +46,7 @@ Route::get('login/google/callback', [LoginWithGoogleController::class, 'handleGo
 Route::get('discuss', [DiscussController::class,'index'])->name('discuss');
 Route::post('discuss/store', [DiscussController::class,'store'])->name('discuss.store');
 Route::get('discuss/{discuss}', [DiscussController::class,'show'])->name('discuss.show');
+Route::post('discuss/{discuss}/replay', [DiscussController::class,'replay'])->name('discuss.replay');
 
 Route::get('/',[IndexController::class,'index']);
 
