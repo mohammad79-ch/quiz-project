@@ -57,37 +57,46 @@
     @endauth
 </div>
 
-<div class="row" style="width:99%;margin: 10px auto">
-    <div >
-        <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
-            <a href="" class="btn btn-primary btn-block">Create new discuss</a>
-        </div>
-        <div class="col-md-9" style="border-radius: 10px ">
-            @foreach($discusses as $discuss)
-            <div class="col-md-12" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                <div class="d-flex justify-content-between">
-                    <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
-                    <p>{{$discuss->created_at->diffForHumans()}}</p>
-                </div>
-                <div class="card-body">
-                    <p>{{$discuss->content}}</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <a class="btn btn-light">replay</a>
-                    </div>
+    <div class="row" style="width:99%;margin: 10px auto">
+        <div >
+            <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
+                <a href="" class="btn btn-primary btn-block">Create new discuss</a>
+            </div>
+            <div class="col-md-9" style="border-radius: 10px ">
+                <div class="col-md-12 mt-3" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                    <form action="{{route('discuss.store')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" name="title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Category</label>
+                            <select name="category" id="" class="form-control">
+                               @foreach(\App\Models\Category::all() as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <div>
-                        <a href="">web</a>
-                        <a href="">programmer</a>
-                        <a href="">bug</a>
-                    </div>
+                        <div class="form-group">
+                            <label for="">Content</label>
+                            <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Tag</label>
+                            <input type="text" name="tags" placeholder="it should statrt with #  for example  #web#programmer" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary">
+                        </div>
+
+                    </form>
                 </div>
             </div>
-            @endforeach
-                <hr>
         </div>
     </div>
-</div>
 
 @include('layouts.footer')
