@@ -13,8 +13,9 @@ class Discuss extends Model
       'title','content',
       'is_answer','parent_id',
       'category_id','user_id',
-      'vote'
+      'vote','updated_at'
     ];
+
 
     public function tags()
     {

@@ -87,7 +87,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <div>
-                        <a class="btn btn-light">{{count($discuss->child)}}</a>
+                        <a class="btn btn-light"> replay {{count($discuss->child)}}</a>
                     </div>
 
                     <div>

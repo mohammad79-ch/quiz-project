@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Discuss;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Jalalian;
@@ -24,7 +25,7 @@ class DiscussController extends Controller
 
         $discusses = Discuss::with(['user','tags','child'])
             ->where('parent_id','0')
-            ->latest()->paginate();
+            ->latest('updated_at')->paginate();
 
         return view('discusses.index',compact('discusses'));
     }
@@ -70,6 +71,8 @@ class DiscussController extends Controller
         $data = $request->validate([
             'content'=>'required',
         ]);
+
+        $discuss->update(['updated_at'=>Carbon::now()]);
 
           Discuss::create([
             'title' => $discuss->title,
