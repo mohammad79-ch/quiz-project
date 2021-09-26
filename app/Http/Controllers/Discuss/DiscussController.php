@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DiscussController extends Controller
 {
     public function index()
     {
-        $discusses = Discuss::where('parent_id',0)->latest()->paginate();
+        $discusses = DB::table('discusses')->where('parent_id',0)->latest()->paginate(20);
+        dd($discusses);
         return view('discusses.index',compact('discusses'));
     }
 
