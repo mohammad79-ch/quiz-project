@@ -65,6 +65,19 @@
         <div class="col-md-9" style="border-radius: 10px ">
             @foreach($discusses as $discuss)
             <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                <div class="d-flex">
+                    <div>
+                        <img
+                            src="{{asset(is_null($discuss->user->image)) ?
+                                    asset('images/defUser.png') :
+                                     asset('images/icon/'.$discuss->user->image) }}" width="50"
+                        >
+                    </div>
+                    <div style="margin-left: 10px">
+                        <h4 class="font-weight-bold" style="font-size: 16px">{{$discuss->user->name}}</h4>
+                        <h4 class="font-weight-bold" style="font-size: 16px"><a href="{{route('profile',$discuss->user->profile)}}">{{'@'.$discuss->user->profile}}</a></h4>
+                    </div>
+                </div>
                 <div class="d-flex justify-content-between">
                     <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
                     <p>{{$discuss->created_at->diffForHumans()}}</p>
@@ -74,7 +87,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <div>
-                        <a class="btn btn-light">replay</a>
+                        <a class="btn btn-light">{{count($discuss->child)}}</a>
                     </div>
 
                     <div>

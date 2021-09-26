@@ -7,13 +7,25 @@ use App\Models\Category;
 use App\Models\Discuss;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Morilog\Jalali\Jalalian;
 
 class DiscussController extends Controller
 {
     public function index()
     {
-        $discusses = DB::table('discusses')->where('parent_id',0)->latest()->paginate(20);
-        dd($discusses);
+//        $discusses = DB::table('discusses')
+//            ->join('discuss_tag','discusses.id','=','discuss_tag.discuss_id')
+//            ->join('tags','tags.id','=','discuss_tag.tag_id')
+//            ->join('users','discusses.user_id','=','users.id')
+//            ->where('parent_id',0)
+//            ->orderBy('discusses.id','desc')
+//            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
+//            ->get();
+
+        $discusses = Discuss::with(['user','tags','child'])
+            ->where('parent_id','0')
+            ->latest()->paginate();
+
         return view('discusses.index',compact('discusses'));
     }
 
