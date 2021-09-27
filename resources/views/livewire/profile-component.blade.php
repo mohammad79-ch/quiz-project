@@ -18,6 +18,7 @@
                         <div><p style="font-size: 12px">All Answer</p></div>
                         <div><p class="bg-warning text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">{{$totalAnswer}}</p></div>
                     </div>
+
                     <div class="d-flex justify-content-between">
                         <div><p style="font-size: 12px">Correct Answer</p></div>
                         <div><p class="bg-success text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">
@@ -28,6 +29,25 @@
                         <div><p style="font-size: 12px">Wrong Answer</p></div>
                         <div><p class="bg-danger text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">
                                 {{$wrongAnswer}}
+                            </p></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div><p style="font-size: 12px">All Discusses</p></div>
+                        <div><p class="bg-secondary text-center text-white" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">
+                                {{$user->discuss->where('parent_id',0)->count()}}
+                            </p></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div><p style="font-size: 12px">All Answer To Discusses</p></div>
+                        <div><p class="bg-warning text-center" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">{{$user->discuss->where('parent_id','!=',0)->count()}}</p></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div><p style="font-size: 12px">Best replay Discuss</p></div>
+                        <div><p class="bg-success text-center text-white" style="width: 20px;height:20px;border-radius: 50%;font-size: 12px">
+                                {{$user->discuss->where('is_answer','>',1)->count()}}
                             </p></div>
                     </div>
 

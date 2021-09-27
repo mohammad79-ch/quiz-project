@@ -54,9 +54,9 @@ class User extends Authenticatable
         return $this->hasMany(comment::class);
     }
 
-    public function discuss()
+    public function discuss(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Discuss::class);
     }
 
     public function discusses()

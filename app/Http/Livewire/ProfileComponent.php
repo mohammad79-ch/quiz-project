@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Article;
+use App\Models\Discuss;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -35,7 +36,6 @@ class ProfileComponent extends Component
             $correctAnswer = $user->getCorrectAnswer();
 
             $wrongAnswer = $user->getWrongAnswer();
-
 
             return view('livewire.profile-component',
                 compact('user', 'totalAnswer', 'correctAnswer', 'wrongAnswer'))
