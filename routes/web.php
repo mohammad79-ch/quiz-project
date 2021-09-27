@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
+Route::get('profile/@{profile}/articles', ProfileComponent::class);
+Route::get('profile/@{profile}/discusses', ProfileComponent::class);
 
 
 Route::group(['middleware'=>'auth'],function (){
