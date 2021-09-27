@@ -39,6 +39,6 @@ class Discuss extends Model
 
     public function child()
     {
-        return $this->hasMany(Discuss::class,'parent_id','id');
+        return $this->hasMany(Discuss::class,'parent_id','id')->latest();
     }
 }

@@ -77,6 +77,21 @@
                         <h4 class="font-weight-bold" style="font-size: 16px">{{$discuss->user->name}}</h4>
                         <h4 class="font-weight-bold" style="font-size: 16px"><a href="{{route('profile',$discuss->user->profile)}}">{{'@'.$discuss->user->profile}}</a></h4>
                     </div>
+                    <div style="margin-left: auto;font-weight: bold">
+                       @php
+                       $idLastUserReplay = $discuss->child->pluck('id')->max();
+                        $discuss_detail = $discuss->child->firstWhere('id',$idLastUserReplay);
+                       @endphp
+                        @if(!is_null($discuss_detail))
+                            replay by <span><a href="{{route('profile',$discuss_detail->user->profile)}}"
+                                    class="text-danger font-weight-bold">
+                                    {{$discuss_detail->user->name}}
+                                    </a></span>
+                        @else
+                            posted by <span><a href="{{route('profile',$discuss->user->profile)}}" class="text-danger font-weight-bold">{{$discuss->user->name}}</a></span>
+                        @endif
+
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between">
                     <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
