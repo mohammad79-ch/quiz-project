@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Discuss;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +24,11 @@ class DiscussController extends Controller
 //            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
 //            ->get();
 
-        $discusses = Discuss::with(['user','tags','child'])
-            ->where('parent_id','0')
+        $discusses = Discuss::with(['user', 'tags', 'child'])
+            ->where('parent_id', '0')
             ->latest('updated_at')->paginate();
 
-        return view('discusses.index',compact('discusses'));
+        return view('discusses.index', compact('discusses'));
     }
 
     public function create()
@@ -37,15 +38,16 @@ class DiscussController extends Controller
 
     public function show(Discuss $discuss)
     {
-        return view('discusses.show',compact('discuss'));
+        return view('discusses.show', compact('discuss'));
     }
+
     public function store(Request $request)
     {
         $data = $request->validate([
-           'title'=>'required',
-            'content'=>'required',
-            'category'=>'required',
-            'tags'=>'required',
+            'title' => 'required',
+            'content' => 'required',
+            'category' => 'required',
+            'tags' => 'required',
         ]);
 
         $tags = explode('#', $request->tags);
@@ -54,34 +56,43 @@ class DiscussController extends Controller
             $tagsAll[] = \App\Models\Tag::firstOrCreate(['name' => $key]);
         }
 
-       $discuss =  Discuss::create([
-           'title' => $data['title'],
-           'category_id'=> $data['category'],
-           'user_id'=> auth()->user()->id,
-            'content'=> $data['content'],
+        $discuss = Discuss::create([
+            'title' => $data['title'],
+            'category_id' => $data['category'],
+            'user_id' => auth()->user()->id,
+            'content' => $data['content'],
         ]);
 
-       $discuss->tags()->sync(collect($tagsAll)->pluck('id'));
+        $discuss->tags()->sync(collect($tagsAll)->pluck('id'));
 
-       return redirect()->route('discuss');
+        return redirect()->route('discuss');
     }
 
-    public function replay(Request $request,Discuss $discuss)
+    public function replay(Request $request, Discuss $discuss)
     {
         $data = $request->validate([
-            'content'=>'required',
+            'content' => 'required',
         ]);
 
-        $discuss->update(['updated_at'=>Carbon::now()]);
+        $discuss->update(['updated_at' => Carbon::now()]);
 
-          Discuss::create([
+        Discuss::create([
             'title' => $discuss->title,
-            'category_id'=> $discuss->category_id,
-            'user_id'=> auth()->user()->id,
-            'content'=> $data['content'],
-            'parent_id'=> $discuss->id
+            'category_id' => $discuss->category_id,
+            'user_id' => auth()->user()->id,
+            'content' => $data['content'],
+            'parent_id' => $discuss->id
         ]);
 
+        return back();
+    }
+
+    public function bestAnswer(Discuss $discuss, $currentDiscuss)
+    {
+        $currentDiscuss = Discuss::find($currentDiscuss);
+
+        $currentDiscuss->update(['is_answer' => $discuss->id]);
+        $discuss->update(['is_answer' => 1]);
         return back();
     }
 }
