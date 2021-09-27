@@ -28,7 +28,9 @@
     <meta name="msapplication-config" content="{{asset('img/favicon/browserconfig.xml')}}">
     <meta name="theme-color" content="#663fb5">
     <link rel="stylesheet" href="{{asset('css/landio.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+          integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     @livewireStyles
@@ -57,41 +59,43 @@
     @endauth
 </div>
 
-    <div class="row" style="width:99%;margin: 10px auto">
-        <div >
-            <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
-                <a href="" class="btn btn-primary btn-block">Filters</a>
-            </div>
-            <div class="col-md-9" style="border-radius: 10px ">
-                        <div class="d-flex bg-light" style="margin-left: 10px !important">
-                            <div class="m-2">
-                                <img
-                                    src="{{asset(is_null($discuss->user->image)) ?
+<div class="row" style="width:99%;margin: 10px auto">
+    <div>
+        <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
+            <a href="" class="btn btn-primary btn-block">Filters</a>
+        </div>
+        <div class="col-md-9" style="border-radius: 10px ">
+            <div class="d-flex bg-light" style="margin-left: 10px !important">
+                <div class="m-2">
+                    <img
+                        src="{{asset(is_null($discuss->user->image)) ?
                                     asset('images/defUser.png') :
                                      asset('images/icon/'.$discuss->user->image) }}" width="50"
-                                >
+                    >
 
-                            </div>
-                            <div class="mt-3"><h3>{{$discuss->title}}</h3></div>
-                        </div>
-                <div class="col-md-12" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                    <div class="card-body">
-                        <p>{{$discuss->content}}</p>
+                </div>
+                <div class="mt-3"><h3>{{$discuss->title}}</h3></div>
+            </div>
+            <div class="col-md-12"
+                 style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                <div class="card-body">
+                    <p>{{$discuss->content}}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p>{{$discuss->created_at->diffForHumans()}}</p>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <p>{{$discuss->created_at->diffForHumans()}}</p>
-                        </div>
-                        <div>
-                            <a href="">web</a>
-                            <a href="">programmer</a>
-                            <a href="">bug</a>
-                        </div>
+                    <div>
+                        <a href="">web</a>
+                        <a href="">programmer</a>
+                        <a href="">bug</a>
                     </div>
                 </div>
-                <hr>
-                @foreach($discuss->child as $disChilds)
-                <div class="col-md-12 mt-3" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+            </div>
+            <hr>
+            @foreach($discuss->child as $disChilds)
+                <div class="col-md-12 mt-3"
+                     style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                     <div class="d-flex">
                         <div>
                             <img
@@ -102,43 +106,56 @@
                         </div>
                         <div style="margin-left: 10px">
                             <h4 class="font-weight-bold" style="font-size: 16px">{{$disChilds->user->name}}</h4>
-                            <h4 class="font-weight-bold" style="font-size: 16px"><a href="{{route('profile',$disChilds->user->profile)}}">{{'@'.$disChilds->user->profile}}</a></h4>
+                            <h4 class="font-weight-bold" style="font-size: 16px"><a
+                                    href="{{route('profile',$disChilds->user->profile)}}">{{'@'.$disChilds->user->profile}}</a>
+                            </h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <p class="font-weight-bold">{{$disChilds->content}}<p>
                     </div>
-                    <div>
+                    <div class="d-flex justify-content-between">
                         <p>{{$disChilds->created_at->diffForHumans()}}</p>
-
+                        @if($discuss->is_answer)
+                            @if($disChilds->is_answer == $discuss->id)
+                                <p><a class="btn btn-success">bestAnswer</a></p>
+                            @endif
+                        @else
+                            <p>     <a
+                                    href="{{route('bestAnswer',['discuss'=>$discuss,'cuurentDiscuss'=>$disChilds])}}"
+                                    class="btn btn-secondary">
+                                    BestAnswer
+                                </a>
+                            </p>
+                        @endif
                     </div>
                 </div>
-                @endforeach
+            @endforeach
 
 
+            <div class="col-md-12" style="border-radius: 10px ">
+                <div class="col-md-12 mt-3"
+                     style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                    <form action="{{route('discuss.replay',$discuss->id)}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Content</label>
+                            <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                            @error('content')
+                            <span class="font-weight-bold text-danger"> {{$message}}</span>
+                            @enderror
+                        </div>
 
-                <div class="col-md-12" style="border-radius: 10px ">
-                    <div class="col-md-12 mt-3" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                        <form action="{{route('discuss.replay',$discuss->id)}}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="">Content</label>
-                                <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
-                                @error('content')
-                                <span class="font-weight-bold text-danger"> {{$message}}</span>
-                                @enderror
-                            </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary">
+                        </div>
 
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary">
-                            </div>
-
-                        </form>
-                    </div>
+                    </form>
                 </div>
-
             </div>
+
         </div>
     </div>
+</div>
 
 @include('layouts.footer')

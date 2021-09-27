@@ -103,6 +103,9 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <a class="btn btn-light"> replay {{count($discuss->child)}}</a>
+                        @if($discuss->is_answer)
+                            <a href="" class="btn btn-warning">solved</a>
+                        @endif
                     </div>
 
                     <div>

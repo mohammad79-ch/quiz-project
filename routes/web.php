@@ -37,6 +37,7 @@ Route::get('profile/@{profile}', ProfileComponent::class)->name('profile');
 Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss.create');
+Route::get('discuss/{discuss}/cuurentDiscuss/{cuurentDiscuss}', [DiscussController::class,'bestAnswer'])->name('bestAnswer');
 });
 
 
