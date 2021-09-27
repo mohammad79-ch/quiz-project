@@ -13,8 +13,9 @@ class Discuss extends Model
       'title','content',
       'is_answer','parent_id',
       'category_id','user_id',
-      'vote'
+      'vote','updated_at'
     ];
+
 
     public function tags()
     {
@@ -38,6 +39,6 @@ class Discuss extends Model
 
     public function child()
     {
-        return $this->hasMany(Discuss::class,'parent_id','id');
+        return $this->hasMany(Discuss::class,'parent_id','id')->latest();
     }
 }
