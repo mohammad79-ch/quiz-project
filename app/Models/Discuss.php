@@ -17,6 +17,8 @@ class Discuss extends Model
     ];
 
 
+    protected $with = ['user', 'tags', 'child'];
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
@@ -24,7 +26,7 @@ class Discuss extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->latest('updated_at');
     }
 
     public function users()

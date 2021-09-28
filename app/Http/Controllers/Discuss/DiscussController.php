@@ -8,6 +8,9 @@ use App\Models\Discuss;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Jalalian;
 
@@ -24,11 +27,28 @@ class DiscussController extends Controller
 //            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
 //            ->get();
 
-        $discusses = Discuss::with(['user', 'tags', 'child'])
-            ->where('parent_id', '0')
-            ->latest('updated_at')->paginate();
+        $discusses = Discuss::where('parent_id', '0')->get();
+
+
+            if (\request()->has('me')){
+             $discusses = auth()->user()->discuss->where('parent_id', '0')->all();
+            }
+
+            $discusses =  $this->paginate($discusses,10);
+
+
 
         return view('discusses.index', compact('discusses'));
+    }
+
+
+    public function paginate($items, $perPage = 10, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return
+            new LengthAwarePaginator($items->forPage($page, $perPage),
+                $items->count(), $perPage, $page, $options);
     }
 
     public function create()

@@ -57,6 +57,7 @@
                                             <a href=""  wire:click.prevent="findTags('{{$tag->name}}')" class="font-weight-bold ml-3 text-dark">#{{$tag->name}}</a>
                                         @endforeach
                                     </div>
+
                                 </div>
 
                                 <div>
