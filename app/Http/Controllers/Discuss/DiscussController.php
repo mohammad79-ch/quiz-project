@@ -8,6 +8,9 @@ use App\Models\Discuss;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Morilog\Jalali\Jalalian;
 
@@ -24,24 +27,50 @@ class DiscussController extends Controller
 //            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
 //            ->get();
 
-        $discusses = Discuss::with(['user', 'tags', 'child'])
-            ->where('parent_id', '0')
-            ->latest('updated_at')->paginate();
+        $discusses = Discuss::where('parent_id', '0')->get();
+
+        if (\request()->has('me')) {
+            $discusses = auth()->user()->discuss->where('parent_id', '0')->all();
+        }
+
+        if (\request()->has('filter_by') && !empty(\request('filter_by'))) {
+            $discusses = auth()->user()->discuss->where('parent_id', '!=', 0)->pluck('id');
+            if (count($discusses)) {
+                $discusses = Discuss::whereIn('id', $discusses)->get();
+            }
+        }
+
+        $discusses = $this->paginate($discusses, 10);
+
 
         return view('discusses.index', compact('discusses'));
     }
 
-    public function create()
+
+    public
+    function paginate($items, $perPage = 10, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return
+            new LengthAwarePaginator($items->forPage($page, $perPage),
+                $items->count(), $perPage, $page, $options);
+    }
+
+    public
+    function create()
     {
         return view('discusses.create');
     }
 
-    public function show(Discuss $discuss)
+    public
+    function show(Discuss $discuss)
     {
         return view('discusses.show', compact('discuss'));
     }
 
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
         $data = $request->validate([
             'title' => 'required',
@@ -68,7 +97,8 @@ class DiscussController extends Controller
         return redirect()->route('discuss');
     }
 
-    public function replay(Request $request, Discuss $discuss)
+    public
+    function replay(Request $request, Discuss $discuss)
     {
         $data = $request->validate([
             'content' => 'required',
@@ -87,7 +117,8 @@ class DiscussController extends Controller
         return back();
     }
 
-    public function bestAnswer(Discuss $discuss, $currentDiscuss)
+    public
+    function bestAnswer(Discuss $discuss, $currentDiscuss)
     {
         $currentDiscuss = Discuss::find($currentDiscuss);
 

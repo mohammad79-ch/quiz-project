@@ -59,10 +59,40 @@
 
 <div class="row" style="width:99%;margin: 10px auto">
     <div >
-        <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #2a9055">
-            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block">Create new discuss</a>
+        <div class="col-md-3" style="flex: 1;padding: 20px;border-radius: 10px;background: #7dffb3">
+
+            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block mb-2">
+                Create new discuss
+            </a>
+
+            <a  href="{{route('discuss')}}?me" class="btn btn-primary btn-block mb-2">
+                My Discusses
+            </a>
+
+            <a href="{{route('discuss')}}?filter_by=contributed_to" class="btn btn-primary btn-block mb-2">
+               My Participation
+            </a>
+
+            <a href="{{route('discuss.create')}}?filter_by=best_answers" class="btn btn-primary btn-block mb-2">
+                My Best Answer
+            </a>
+
+            <a href="{{route('discuss.create')}}?favorites=1" class="btn btn-primary btn-block mb-2">
+                Following
+            </a>
+
+            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block mb-2">
+                Popular This week
+            </a>
+
+            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block mb-2">
+                Popular All Time
+            </a>
+
+
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
+            @if(count($discusses))
             @foreach($discusses as $discuss)
             <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="d-flex">
@@ -116,6 +146,11 @@
                 </div>
             </div>
             @endforeach
+            @else
+                <div>
+                    <p class="alert alert-info">There are no relevant conversations at this time.</p>
+                </div>
+            @endif
                 <hr>
         </div>
     </div>
