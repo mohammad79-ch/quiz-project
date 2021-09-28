@@ -92,6 +92,7 @@
 
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
+            @if(count($discusses))
             @foreach($discusses as $discuss)
             <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="d-flex">
@@ -145,6 +146,11 @@
                 </div>
             </div>
             @endforeach
+            @else
+                <div>
+                    <p class="alert alert-info">There are no relevant conversations at this time.</p>
+                </div>
+            @endif
                 <hr>
         </div>
     </div>
