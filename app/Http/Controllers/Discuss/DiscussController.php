@@ -27,13 +27,26 @@ class DiscussController extends Controller
 //            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
 //            ->get();
 
-        $discusses = Discuss::where('parent_id', '0')->get();
+        $discusses = Discuss::latest('updated_at')->where('parent_id', '0')->get();
 
         if (\request()->has('me')) {
             $discusses = auth()->user()->discuss->where('parent_id', '0')->all();
         }
 
-        if (\request()->has('filter_by') && !empty(\request('filter_by'))) {
+        if (\request()->has('filter_by') && \request('filter_by') == "best_answers") {
+            $discusses = Discuss::whereIn('is_answer',auth()->user()->discuss->pluck('id')->all())->get();
+        }
+
+        // get all and parent_id = 0
+        // get the most replay
+        // latest that replay
+        // show in view
+
+         if (\request()->has('trending') && \request('trending') == "1") {
+            $discusses = Discuss::withCount('child')->where('parent_id',0)->orderBy('child_count','desc')->get();
+         }
+
+        if (\request()->has('filter_by') && \request('filter_by') == "contributed_to") {
             $discusses = auth()->user()->discuss->where('parent_id', '!=', 0)->pluck('id');
             if (count($discusses)) {
                 $discusses = Discuss::whereIn('id', $discusses)->get();
