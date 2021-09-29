@@ -73,7 +73,7 @@
                My Participation
             </a>
 
-            <a href="{{route('discuss.create')}}?filter_by=best_answers" class="btn btn-primary btn-block mb-2">
+            <a href="{{route('discuss')}}?filter_by=best_answers" class="btn btn-primary btn-block mb-2">
                 My Best Answer
             </a>
 
@@ -81,7 +81,7 @@
                 Following
             </a>
 
-            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block mb-2">
+            <a href="{{route('discuss')}}?trending=1" class="btn btn-primary btn-block mb-2">
                 Popular This week
             </a>
 
@@ -94,6 +94,7 @@
         <div class="col-md-9" style="border-radius: 10px ">
             @if(count($discusses))
             @foreach($discusses as $discuss)
+
             <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="d-flex">
                     <div>
@@ -125,7 +126,6 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
-                    <p>{{$discuss->created_at->diffForHumans()}}</p>
                 </div>
                 <div class="card-body">
                     <p>{{$discuss->content}}</p>

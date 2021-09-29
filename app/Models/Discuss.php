@@ -43,4 +43,5 @@ class Discuss extends Model
     {
         return $this->hasMany(Discuss::class,'parent_id','id')->latest();
     }
+
 }
