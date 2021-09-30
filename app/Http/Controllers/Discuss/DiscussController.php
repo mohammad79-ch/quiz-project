@@ -43,7 +43,13 @@ class DiscussController extends Controller
         // show in view
 
          if (\request()->has('trending') && \request('trending') == "1") {
-            $discusses = Discuss::withCount('child')->where('parent_id',0)->orderBy('child_count','desc')->get();
+             $start = Carbon::now()->subWeek()->startOfWeek();
+             $end = Carbon::now()->subWeek()->endOfWeek();
+             $discusses = Discuss::withCount('child')
+             ->where('parent_id',0)
+             ->whereBetween('created_at',[$start,$end])
+             ->orderBy('child_count','desc')
+             ->get();
          }
 
         if (\request()->has('filter_by') && \request('filter_by') == "contributed_to") {
