@@ -52,11 +52,22 @@ class DiscussController extends Controller
              ->get();
          }
 
+         if(\request()->has('popular') && \request('popular') == "1"){
+             $discusses = Discuss::withCount('child')
+                 ->where('parent_id',0)
+                 ->orderBy('child_count','desc')
+                 ->get();
+         }
+
         if (\request()->has('filter_by') && \request('filter_by') == "contributed_to") {
             $discusses = auth()->user()->discuss->where('parent_id', '!=', 0)->pluck('id');
             if (count($discusses)) {
                 $discusses = Discuss::whereIn('id', $discusses)->get();
             }
+        }
+
+        if(\request()->has('answered') && \request('answered') == "1"){
+            $discusses = Discuss::where('is_answer',1)->where('parent_id',0)->get();
         }
 
         $discusses = $this->paginate($discusses, 10);
