@@ -85,15 +85,14 @@
                 Popular This week
             </a>
 
-            <a href="{{route('discuss')}}?trending=1" class="btn btn-primary btn-block mb-2">
-                Popular This week
-            </a>
 
-
-            <a href="{{route('discuss')}}" class="btn btn-primary btn-block mb-2">
+            <a href="{{route('discuss')}}?popular=1" class="btn btn-primary btn-block mb-2">
                 Popular All Time
             </a>
 
+            <a href="{{route('discuss')}}?answered=1" class="btn btn-primary btn-block mb-2">
+                Solved
+            </a>
 
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
