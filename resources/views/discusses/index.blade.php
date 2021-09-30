@@ -85,7 +85,12 @@
                 Popular This week
             </a>
 
-            <a href="{{route('discuss.create')}}" class="btn btn-primary btn-block mb-2">
+            <a href="{{route('discuss')}}?trending=1" class="btn btn-primary btn-block mb-2">
+                Popular This week
+            </a>
+
+
+            <a href="{{route('discuss')}}" class="btn btn-primary btn-block mb-2">
                 Popular All Time
             </a>
 
@@ -94,7 +99,6 @@
         <div class="col-md-9" style="border-radius: 10px ">
             @if(count($discusses))
             @foreach($discusses as $discuss)
-
             <div class="col-md-12 mt-2" style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="d-flex">
                     <div>
