@@ -70,6 +70,18 @@ class DiscussController extends Controller
             $discusses = Discuss::where('is_answer',1)->where('parent_id',0)->get();
         }
 
+        if(\request()->has('answered') && \request('answered') == "0"){
+            $discusses = Discuss::where('parent_id',0)
+                ->where('is_answer',0)->get();
+        }
+
+        if(\request()->has('fresh') && \request('fresh') == "1"){
+            $discusses = Discuss::withCount('child')
+                ->where('parent_id',0)
+                ->get()->filter(fn($dis)=> $dis->child_count == 0);
+        }
+
+
         $discusses = $this->paginate($discusses, 10);
 
 

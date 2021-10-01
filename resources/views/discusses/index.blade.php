@@ -94,6 +94,16 @@
                 Solved
             </a>
 
+
+            <a href="{{route('discuss')}}?answered=0" class="btn btn-primary btn-block mb-2">
+                Unsolved
+            </a>
+
+
+            <a href="{{route('discuss')}}?fresh=1" class="btn btn-primary btn-block mb-2">
+                No Replies Yet
+            </a>
+
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
             @if(count($discusses))
