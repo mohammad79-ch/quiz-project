@@ -18,67 +18,38 @@ class DiscussController extends Controller
 {
     public function index()
     {
-//        $discusses = DB::table('discusses')
-//            ->join('discuss_tag','discusses.id','=','discuss_tag.discuss_id')
-//            ->join('tags','tags.id','=','discuss_tag.tag_id')
-//            ->join('users','discusses.user_id','=','users.id')
-//            ->where('parent_id',0)
-//            ->orderBy('discusses.id','desc')
-//            ->select('discusses.*', 'discuss_tag.*', 'tags.*','users.*')
-//            ->get();
-
         $discusses = Discuss::latest('updated_at')->where('parent_id', '0')->get();
 
         if (\request()->has('me')) {
-            $discusses = auth()->user()->discuss->where('parent_id', '0')->all();
+            $discusses = $this->getMyDiscusses();
         }
 
         if (\request()->has('filter_by') && \request('filter_by') == "best_answers") {
-            $discusses = Discuss::whereIn('is_answer',auth()->user()->discuss->pluck('id')->all())->get();
+            $discusses = $this->getBestAnswer();
         }
 
-        // get all and parent_id = 0
-        // get the most replay
-        // latest that replay
-        // show in view
-
          if (\request()->has('trending') && \request('trending') == "1") {
-             $start = Carbon::now()->subWeek()->startOfWeek();
-             $end = Carbon::now()->subWeek()->endOfWeek();
-             $discusses = Discuss::withCount('child')
-             ->where('parent_id',0)
-             ->whereBetween('created_at',[$start,$end])
-             ->orderBy('child_count','desc')
-             ->get();
+             $discusses = $this->getMostRepliesInWeek();
          }
 
          if(\request()->has('popular') && \request('popular') == "1"){
-             $discusses = Discuss::withCount('child')
-                 ->where('parent_id',0)
-                 ->orderBy('child_count','desc')
-                 ->get();
+             $discusses = $this->getMostRepliesAllTime();
          }
 
         if (\request()->has('filter_by') && \request('filter_by') == "contributed_to") {
-            $discusses = auth()->user()->discuss->where('parent_id', '!=', 0)->pluck('id');
-            if (count($discusses)) {
-                $discusses = Discuss::whereIn('id', $discusses)->get();
-            }
+            $discusses = $this->getMyContributed();
         }
 
         if(\request()->has('answered') && \request('answered') == "1"){
-            $discusses = Discuss::where('is_answer',1)->where('parent_id',0)->get();
+            $discusses = $this->getSolved();
         }
 
         if(\request()->has('answered') && \request('answered') == "0"){
-            $discusses = Discuss::where('parent_id',0)
-                ->where('is_answer',0)->get();
+            $discusses = $this->getUnsolved();
         }
 
         if(\request()->has('fresh') && \request('fresh') == "1"){
-            $discusses = Discuss::withCount('child')
-                ->where('parent_id',0)
-                ->get()->filter(fn($dis)=> $dis->child_count == 0);
+            $discusses = $this->getNoRepliesSoFar();
         }
 
 
@@ -89,7 +60,6 @@ class DiscussController extends Controller
     }
 
 
-    public
     function paginate($items, $perPage = 10, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
@@ -99,19 +69,16 @@ class DiscussController extends Controller
                 $items->count(), $perPage, $page, $options);
     }
 
-    public
     function create()
     {
         return view('discusses.create');
     }
 
-    public
     function show(Discuss $discuss)
     {
         return view('discusses.show', compact('discuss'));
     }
 
-    public
     function store(Request $request)
     {
         $data = $request->validate([
@@ -139,7 +106,6 @@ class DiscussController extends Controller
         return redirect()->route('discuss');
     }
 
-    public
     function replay(Request $request, Discuss $discuss)
     {
         $data = $request->validate([
@@ -159,7 +125,6 @@ class DiscussController extends Controller
         return back();
     }
 
-    public
     function bestAnswer(Discuss $discuss, $currentDiscuss)
     {
         $currentDiscuss = Discuss::find($currentDiscuss);
@@ -167,5 +132,92 @@ class DiscussController extends Controller
         $currentDiscuss->update(['is_answer' => $discuss->id]);
         $discuss->update(['is_answer' => 1]);
         return back();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyDiscusses()
+    {
+        $discusses = auth()->user()->discuss->where('parent_id', '0')->all();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBestAnswer()
+    {
+        $discusses = Discuss::whereIn('is_answer', auth()->user()->discuss->pluck('id')->all())->get();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMostRepliesInWeek()
+    {
+        $start = Carbon::now()->subWeek()->startOfWeek();
+        $end = Carbon::now()->subWeek()->endOfWeek();
+        $discusses = Discuss::withCount('child')
+            ->where('parent_id', 0)
+            ->whereBetween('created_at', [$start, $end])
+            ->orderBy('child_count', 'desc')
+            ->get();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMostRepliesAllTime()
+    {
+        $discusses = Discuss::withCount('child')
+            ->where('parent_id', 0)
+            ->orderBy('child_count', 'desc')
+            ->get();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyContributed()
+    {
+        $discusses = auth()->user()->discuss->where('parent_id', '!=', 0)->pluck('id');
+        if (count($discusses)) {
+            $discusses = Discuss::whereIn('id', $discusses)->get();
+        }
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSolved()
+    {
+        $discusses = Discuss::where('is_answer', 1)->where('parent_id', 0)->get();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsolved()
+    {
+        $discusses = Discuss::where('parent_id', 0)
+            ->where('is_answer', 0)->get();
+        return $discusses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNoRepliesSoFar()
+    {
+        $discusses = Discuss::withCount('child')
+            ->where('parent_id', 0)
+            ->get()->filter(fn($dis) => $dis->child_count == 0);
+        return $discusses;
     }
 }

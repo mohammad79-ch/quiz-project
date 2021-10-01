@@ -44,4 +44,9 @@ class Discuss extends Model
         return $this->hasMany(Discuss::class,'parent_id','id')->latest();
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Like::class,'likeable');
+    }
+
 }
