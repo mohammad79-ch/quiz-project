@@ -19,10 +19,7 @@ class SubQuestionController extends Controller
            'title'=>['required'],
         ]);
 
-        $question->SubQuestion()->create([
-            'title'=>$data['title'],
-            'is_answer' => $request->has('is_answer')
-        ]);
+        $this->createSubQuestion($question, $data['title'], $request);
 
         return redirect()->route('questions.index');
     }
@@ -38,10 +35,7 @@ class SubQuestionController extends Controller
             'title'=>['required'],
         ]);
 
-        $subQuestion->update([
-            'title'=>$data['title'],
-            'is_answer' => $request->has('is_answer')
-        ]);
+        $this->updateSubQuestion($subQuestion, $data['title'], $request);
 
         return redirect()->route('questions.index');
 
@@ -51,5 +45,31 @@ class SubQuestionController extends Controller
     {
         $subQuestion->delete();
         return back();
+    }
+
+    /**
+     * @param Question $question
+     * @param $title
+     * @param Request $request
+     */
+    public function createSubQuestion(Question $question, $title, Request $request): void
+    {
+        $question->SubQuestion()->create([
+            'title' => $title,
+            'is_answer' => $request->has('is_answer')
+        ]);
+    }
+
+    /**
+     * @param SubQuestion $subQuestion
+     * @param $title
+     * @param Request $request
+     */
+    public function updateSubQuestion(SubQuestion $subQuestion, $title, Request $request): void
+    {
+        $subQuestion->update([
+            'title' => $title,
+            'is_answer' => $request->has('is_answer')
+        ]);
     }
 }

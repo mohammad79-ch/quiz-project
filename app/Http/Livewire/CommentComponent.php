@@ -19,11 +19,7 @@ class CommentComponent extends Component
     {
         $this->validate();
 
-        auth()->user()->comments()->create([
-           'content'=>$this->content,
-           'commentable_id'=>$this->article->id,
-           'commentable_type'=>get_class($this->article)
-        ]);
+        $this->createComments();
 
         $this->emit('commentRefresh');
         session()->flash('successComment','Comment sent ');
@@ -31,5 +27,14 @@ class CommentComponent extends Component
     public function render()
     {
         return view('livewire.comment-component');
+    }
+
+    public function createComments(): void
+    {
+        auth()->user()->comments()->create([
+            'content' => $this->content,
+            'commentable_id' => $this->article->id,
+            'commentable_type' => get_class($this->article)
+        ]);
     }
 }

@@ -40,14 +40,7 @@ class AddArticleComponent extends Component
         $this->image->storeAs('articles', $imageName);
 
 
-        $article = auth()->user()->articles()->create([
-            'title' => $this->title,
-            'content' => $this->content,
-            'image' => $imageName,
-            'status' => $this->status,
-            'slug' => Str::slug($this->slug),
-            'category_id'=>$this->category_id
-        ]);
+        $article = $this->saveArticle($imageName);
 
         $article->tags()->sync(collect($this->tags)->pluck('id'));
 
@@ -70,5 +63,22 @@ class AddArticleComponent extends Component
         foreach ($tags as $tag => $key) {
             $this->tags[] = \App\Models\Tag::firstOrCreate(['name' => $key]);
         }
+    }
+
+    /**
+     * @param string $imageName
+     * @return mixed
+     */
+    public function saveArticle(string $imageName)
+    {
+        $article = auth()->user()->articles()->create([
+            'title' => $this->title,
+            'content' => $this->content,
+            'image' => $imageName,
+            'status' => $this->status,
+            'slug' => Str::slug($this->slug),
+            'category_id' => $this->category_id
+        ]);
+        return $article;
     }
 }

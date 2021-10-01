@@ -24,14 +24,24 @@ class LoginWithGoogleController extends Controller
             return redirect('/');
         }
 
-       $user =  User::create([
-           'name'=>$user->name,
-           'email'=>$user->email,
-           'password' => 0,
-       ]);
+        $user = $this->createUser($user);
 
         auth()->loginUsingId($user->id,true);
         return redirect('/');
 
+    }
+
+    /**
+     * @param \Laravel\Socialite\Contracts\User $user
+     * @return mixed
+     */
+    public function createUser(\Laravel\Socialite\Contracts\User $user)
+    {
+        $user = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => 0,
+        ]);
+        return $user;
     }
 }

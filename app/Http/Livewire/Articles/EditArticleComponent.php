@@ -69,14 +69,7 @@ class EditArticleComponent extends Component
         }
 
 
-         $this->article->update([
-            'title' => $this->title,
-            'content' => $this->content,
-            'image' => $this->image,
-            'status' => $this->status,
-            'slug' => $this->slug,
-            'category_id'=>$this->category_id
-        ]);
+        $this->updateArticle();
 
         $this->article->tags()->sync(collect($this->tags)->pluck('id'));
         $this->tags = [];
@@ -87,5 +80,17 @@ class EditArticleComponent extends Component
     public function render()
     {
         return view('livewire.articles.edit-article-component')->layout('layouts.base');
+    }
+
+    public function updateArticle(): void
+    {
+        $this->article->update([
+            'title' => $this->title,
+            'content' => $this->content,
+            'image' => $this->image,
+            'status' => $this->status,
+            'slug' => $this->slug,
+            'category_id' => $this->category_id
+        ]);
     }
 }

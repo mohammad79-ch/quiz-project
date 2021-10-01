@@ -29,11 +29,7 @@ class MakeStoryForUser extends Component
 
         $this->photo->storeAs('photos',$name);
 
-        auth()->user()->images()->create([
-            'url' => $name,
-            'alt' => Str::slug("simple slug for profile".auth()->user()->profile),
-            'expired' => now()->addDay()
-        ]);
+        $this->createImageStory($name);
 
         $this->emit('fireUserStoryComponent');
 
@@ -42,5 +38,17 @@ class MakeStoryForUser extends Component
     public function render()
     {
         return view('livewire.make-story-for-user');
+    }
+
+    /**
+     * @param string $name
+     */
+    public function createImageStory(string $name): void
+    {
+        auth()->user()->images()->create([
+            'url' => $name,
+            'alt' => Str::slug("simple slug for profile" . auth()->user()->profile),
+            'expired' => now()->addDay()
+        ]);
     }
 }

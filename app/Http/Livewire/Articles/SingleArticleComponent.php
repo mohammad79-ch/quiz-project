@@ -19,7 +19,6 @@ class SingleArticleComponent extends Component
     {
         $this->relative = Tag::whereIn('id',$this->article->tags->pluck('id')->toArray())->get() ;
 
-
         $relative = [];
 
         foreach ($this->relative as $rel){
