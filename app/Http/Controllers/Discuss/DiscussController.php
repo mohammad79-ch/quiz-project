@@ -37,11 +37,6 @@ class DiscussController extends Controller
             $discusses = Discuss::whereIn('is_answer',auth()->user()->discuss->pluck('id')->all())->get();
         }
 
-        // get all and parent_id = 0
-        // get the most replay
-        // latest that replay
-        // show in view
-
          if (\request()->has('trending') && \request('trending') == "1") {
              $start = Carbon::now()->subWeek()->startOfWeek();
              $end = Carbon::now()->subWeek()->endOfWeek();
