@@ -29,7 +29,10 @@
     <meta name="theme-color" content="#663fb5">
     <link rel="stylesheet" href="{{asset('css/landio.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/regular.min.js" integrity="sha512-4D8biBgqIYSc9UhQlbLb/Mdoajfr6qz5AoWh9NQ1HPryiS415RIh6ErgtavB711Se9DMStLY1KYGvn4lpgIcTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     @livewireStyles
+
 
 </head>
 

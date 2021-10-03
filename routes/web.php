@@ -60,7 +60,7 @@ Route::get('/article/{article}', SingleArticleComponent::class)->name('single.ar
 
 
 Route::get('/log', function () {
-   return \auth()->loginUsingId(29);
+    return \auth()->loginUsingId(29);
      auth()->logout();
 });
 
