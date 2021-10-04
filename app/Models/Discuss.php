@@ -40,7 +40,7 @@ class Discuss extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class,'votes')->withTimestamps();
+        return $this->belongsToMany(User::class,'votes')->withPivot('status')->withTimestamps();
     }
 
     public function category()

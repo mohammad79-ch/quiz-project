@@ -15,12 +15,19 @@ class VoteComponent extends Component
 
     public function increase(): bool
     {
-        if(is_null($this->discuss->users('user_id',auth()->user()->id)->first())){
-            $this->discuss->users()->attach(auth()->user()->id);
-            $this->countVote = count($this->discuss->users);
 
+        if($this->discuss->vote == 0){
+            $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>1]);
             $this->discuss->vote++;
             $this->discuss->save();
+        }
+
+        if(!is_null($this->discuss->users()->wherePivot('user_id',auth()->id())->wherePivot('status',-1)->first())){
+
+            $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>1]);
+            $this->discuss->vote++;
+            $this->discuss->save();
+
         }
 
         $this->discuss->refresh();
@@ -30,12 +37,21 @@ class VoteComponent extends Component
 
     public function decrease(): bool
     {
-        if(!is_null($this->discuss->users('user_id',auth()->user()->id)->first())){
-            $this->discuss->users()->detach(auth()->user()->id);
 
+        if($this->discuss->vote == 0){
+            $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>-1]);
             $this->discuss->vote--;
             $this->discuss->save();
         }
+
+        if(!is_null($this->discuss->users()->wherePivot('user_id',auth()->id())->wherePivot('status',1)->first())){
+
+            $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>-1]);
+            $this->discuss->vote--;
+            $this->discuss->save();
+        }
+
+
 
         $this->discuss->refresh();
 
