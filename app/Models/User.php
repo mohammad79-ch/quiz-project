@@ -61,7 +61,7 @@ class User extends Authenticatable
 
     public function discusses()
     {
-        return $this->belongsToMany(Discuss::class,'votes')->withTimestamps();
+        return $this->belongsToMany(Discuss::class,'votes')->withTimestamps()->withPivot('status');
     }
 
     public function likes()

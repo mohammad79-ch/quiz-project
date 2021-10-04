@@ -51,7 +51,8 @@
     @auth
         <div><a href="{{route('profile',auth()->user()->profile)}}" class="text-white">Name
                 : {{auth()->user()->name}}</a></div>
-        <div>
+
+            <div>
             <a href="{{route('discuss')}}" class="text-white">Discuss</a>
             <a href="{{route('admin.dashboard')}}" class="text-white">Dashboard</a>
             <a href="{{route('articles')}}" class="font-weight-bold text-white">Articles</a>
@@ -81,6 +82,8 @@
                  style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="card-body d-flex justify-content-between">
                     <p>{{$discuss->content}}</p>
+                    @livewire('vote.vote-component',['discuss'=>$discuss])
+
                 </div>
                 <div class="d-flex justify-content-between">
                     <div>
