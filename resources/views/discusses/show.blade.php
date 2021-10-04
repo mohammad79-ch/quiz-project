@@ -28,6 +28,7 @@
     <meta name="msapplication-config" content="{{asset('img/favicon/browserconfig.xml')}}">
     <meta name="theme-color" content="#663fb5">
     <link rel="stylesheet" href="{{asset('css/landio.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
           integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -115,6 +116,9 @@
                         <p class="font-weight-bold">{{$disChilds->content}}<p>
                     </div>
                     <div class="d-flex justify-content-between">
+
+                        @livewire('like.like-component',['discuss' => $disChilds])
+
                         <p>{{$disChilds->created_at->diffForHumans()}}</p>
                         @if($discuss->is_answer)
                             @if($disChilds->is_answer == $discuss->id)
