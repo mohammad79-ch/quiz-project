@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-12"
                  style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                <div class="card-body">
+                <div class="card-body d-flex justify-content-between">
                     <p>{{$discuss->content}}</p>
                 </div>
                 <div class="d-flex justify-content-between">
@@ -112,8 +112,11 @@
                             </h4>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body d-flex justify-content-between">
                         <p class="font-weight-bold">{{$disChilds->content}}<p>
+                        <div class="d-flex flex-column">
+                            @livewire('vote.vote-component',['discuss'=>$disChilds])
+                        </div>
                     </div>
                     <div class="d-flex justify-content-between">
 

@@ -125,8 +125,10 @@
                     </div>
                     <div style="margin-left: auto;font-weight: bold">
                        @php
+
                        $idLastUserReplay = $discuss->child->pluck('id')->max();
                         $discuss_detail = $discuss->child->firstWhere('id',$idLastUserReplay);
+
                        @endphp
                         @if(!is_null($discuss_detail))
                             replay by <span><a href="{{route('profile',$discuss_detail->user->profile)}}"
@@ -141,6 +143,8 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <h3><a href="{{route('discuss.show',$discuss->id)}}" class="font-weight-bold">{{$discuss->title}}</a></h3>
+
+
                 </div>
                 <div class="card-body">
                     <p>{{$discuss->content}}</p>
