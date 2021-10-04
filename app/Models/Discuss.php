@@ -58,4 +58,5 @@ class Discuss extends Model
         return $this->morphMany(Like::class,'likeable');
     }
 
+
 }
