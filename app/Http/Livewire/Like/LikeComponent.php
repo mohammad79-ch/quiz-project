@@ -26,29 +26,33 @@ class LikeComponent extends Component
 
     public function like()
     {
-        if (count($this->discuss->likes->where('user_id',auth()->user()->id)->all())){
-            return false;
-        }
+       if (auth()->check()){
+           if (count($this->discuss->likes->where('user_id',auth()->user()->id)->all())){
+               return false;
+           }
 
-        $like = $this->discuss->likes()->make(); //create a like
-        $like->user()->associate(auth()->user()); //attach user to a like
+           $like = $this->discuss->likes()->make(); //create a like
+           $like->user()->associate(auth()->user()); //attach user to a like
 
-        $like->save();
+           $like->save();
 
-        $this->countLike = $this->discuss->likes()->count();
+           $this->countLike = $this->discuss->likes()->count();
 
-        $this->discuss->refresh();
+           $this->discuss->refresh();
+       }
     }
 
     public function unLike()
     {
 
+    if (auth()->check()){
         if (count($this->discuss->likes->where('user_id',auth()->user()->id)->all())){
-        auth()->user()->likes()->where('likeable_id',$this->discuss->id)->delete();
+            auth()->user()->likes()->where('likeable_id',$this->discuss->id)->delete();
         }
         $this->countLike = $this->discuss->likes()->count();
 
         $this->discuss->refresh();
+    }
 
     }
 

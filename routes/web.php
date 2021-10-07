@@ -40,6 +40,8 @@ Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss.create');
 Route::get('discuss/{discuss}/cuurentDiscuss/{cuurentDiscuss}', [DiscussController::class,'bestAnswer'])->name('bestAnswer');
+Route::get('/article/{article}/edit', EditArticleComponent::class)->name('edit.article');
+Route::get('/article/add', AddArticleComponent::class)->name('add.article');
 });
 
 
@@ -54,13 +56,11 @@ Route::post('discuss/{discuss}/replay', [DiscussController::class,'replay'])->na
 Route::get('/',[IndexController::class,'index']);
 
 Route::get('/articles', ArticleComponent::class)->name('articles');
-Route::get('/article/add', AddArticleComponent::class)->name('add.article');
-Route::get('/article/{article}/edit', EditArticleComponent::class)->name('edit.article');
 Route::get('/article/{article}', SingleArticleComponent::class)->name('single.article');
 
 
 Route::get('/log', function () {
-//    return \auth()->loginUsingId(29);
+    return \auth()->loginUsingId(29);
      auth()->logout();
 });
 
