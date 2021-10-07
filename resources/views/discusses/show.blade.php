@@ -141,29 +141,28 @@
                     </div>
                 </div>
             @endforeach
+            @auth
+                <div class="col-md-12" style="border-radius: 10px ">
+                    <div class="col-md-12 mt-3"
+                         style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
+                        <form action="{{route('discuss.replay',$discuss->id)}}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="">Content</label>
+                                <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                                @error('content')
+                                <span class="font-weight-bold text-danger"> {{$message}}</span>
+                                @enderror
+                            </div>
 
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
 
-            <div class="col-md-12" style="border-radius: 10px ">
-                <div class="col-md-12 mt-3"
-                     style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
-                    <form action="{{route('discuss.replay',$discuss->id)}}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label for="">Content</label>
-                            <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
-                            @error('content')
-                            <span class="font-weight-bold text-danger"> {{$message}}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary">
-                        </div>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-
+            @endauth
         </div>
     </div>
 </div>

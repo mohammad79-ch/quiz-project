@@ -161,9 +161,7 @@
 
                     <div>
 
-                        @livewire('like.like-component',['discuss' => $discuss])
-
-
+                            @livewire('like.like-component',['discuss' => $discuss])
                     </div>
 
                     <div>
