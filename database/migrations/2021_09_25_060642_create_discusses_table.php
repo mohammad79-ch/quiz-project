@@ -37,6 +37,7 @@ class CreateDiscussesTable extends Migration
             $table->id();
             $table->foreignId('discuss_id')->constrained('discusses','id');
             $table->foreignId('user_id')->constrained('users','id');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
