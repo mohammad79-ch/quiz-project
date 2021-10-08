@@ -15,16 +15,16 @@ class VoteComponent extends Component
 
     public function increase(): bool
     {
-        if (auth()->check()){
-            if($this->discuss->vote == 0){
-                $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>1]);
+        if (auth()->check()) {
+            if ($this->discuss->vote == 0) {
+                $this->discuss->users()->syncWithPivotValues(auth()->user()->id, ['status' => 1]);
                 $this->discuss->vote++;
                 $this->discuss->save();
             }
 
-            if(!is_null($this->discuss->users()->wherePivot('user_id',auth()->id())->wherePivot('status',-1)->first())){
+            if (!is_null($this->discuss->users()->wherePivot('user_id', auth()->id())->wherePivot('status', -1)->first())) {
 
-                $this->discuss->users()->syncWithPivotValues(auth()->user()->id,['status'=>1]);
+                $this->discuss->users()->syncWithPivotValues(auth()->user()->id, ['status' => 1]);
                 $this->discuss->vote++;
                 $this->discuss->save();
 
@@ -32,8 +32,10 @@ class VoteComponent extends Component
 
             $this->discuss->refresh();
 
-            return false;
         }
+
+            return false;
+
     }
 
     public function decrease(): bool

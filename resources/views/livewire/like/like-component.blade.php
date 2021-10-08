@@ -1,6 +1,6 @@
 <div>
 
-    @if(count($discuss->likes->where('user_id',auth()->user()->id)->all()))
+    @if(auth()->check() && count($discuss->likes->where('user_id',auth()->user()->id)->all()))
         <a>
             <i wire:click.prevent="unLike" class="fas fa-heart" style="font-size:22px"></i>
         </a>

@@ -20,7 +20,11 @@ class LikeComponent extends Component
 
     public function mount()
     {
-        $this->check = count($this->discuss->likes->where('user_id',auth()->user()->id)->all());
+
+        if (auth()->check()){
+            $this->check = count($this->discuss->likes->where('user_id',auth()->user()->id)->all());
+        }
+
         $this->countLike = count($this->discuss->likes);
     }
 
