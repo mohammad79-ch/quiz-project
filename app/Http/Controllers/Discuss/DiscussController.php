@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
 use App\Models\User;
+use App\Notifications\sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -108,11 +109,15 @@ class DiscussController extends Controller
 
     function replay(Request $request, Discuss $discuss)
     {
+        $userOwnDisucss = $discuss->user;
+
         $data = $request->validate([
             'content' => 'required',
         ]);
 
+
         $discuss->update(['updated_at' => Carbon::now()]);
+
 
         Discuss::create([
             'title' => $discuss->title,
@@ -121,6 +126,10 @@ class DiscussController extends Controller
             'content' => $data['content'],
             'parent_id' => $discuss->id
         ]);
+
+        $userReplied = auth()->user();
+
+        $userOwnDisucss->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
 
         return back();
     }

@@ -37,7 +37,7 @@ class AddArticleComponent extends Component
 
         $imageName = md5($this->image . microtime()) . '.' . $this->image->extension();
 
-        $this->image->storeAs('articles', $imageName);
+        $this->image->storeAs('public\articles', $imageName);
 
 
         $article = $this->saveArticle($imageName);

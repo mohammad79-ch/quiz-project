@@ -1,4 +1,10 @@
 <div>
+    <div class="text-center">
+        @if ($photo)
+            Photo Preview:
+            <img src="{{ $photo->temporaryUrl() }}" width="200">
+        @endif
+    </div>
     <form wire:submit.prevent="saveUserStory">
         @csrf
         <span class="font-weight-bold">Choose The Image For Story</span>

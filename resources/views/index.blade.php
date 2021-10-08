@@ -14,6 +14,12 @@
     <!-- Intro
 ================================================== -->
     <div class="container">
+
+        <form action="{{route('file')}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="image">
+            <input type="submit">
+        </form>
         <div class="row">
         @livewire('user-story-component')
         @auth

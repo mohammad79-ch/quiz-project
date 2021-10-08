@@ -57,6 +57,7 @@
             <a href="/" class="font-weight-bold text-white">Home</a>
         </div>
     @endauth
+
 </div>
 
 <div class="row" style="width:99%;margin: 10px auto">

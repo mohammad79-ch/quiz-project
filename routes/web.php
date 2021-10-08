@@ -67,6 +67,7 @@ Route::get('/log', function () {
 
 Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
 
+
     Route::get('profile/@{profile}/follow', FollowComponent::class);
 
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -81,3 +82,16 @@ Route::group(['prefix'=>'admin/dashboard',['as'=>'admin']],function (){
     Route::put('/subQuestion/{sub_question}',[SubQuestionController::class,'update'])->name('sub_question.update');
 });
 
+
+Route::post('file',function (){
+    $name = request()->file('image')->extension();
+
+    $img = \Illuminate\Support\Str::random().'.'.$name;
+
+    request()->file('image')->storeAs(
+        'public/images', $img
+    );
+
+    dd('done');
+
+})->name('file');
