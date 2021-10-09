@@ -109,15 +109,24 @@ class DiscussController extends Controller
 
     function replay(Request $request, Discuss $discuss)
     {
+        $regex = '~(@\w+)~';
+
+        if (preg_match_all($regex,\request('content'), $matches)) {
+         $username = $matches;
+        }
+       $findProfileUser = explode('@',$username[1][0]);
+
+        $userMentioned = User::where('profile',$findProfileUser[1])->first();
+
+
+
         $userOwnDisucss = $discuss->user;
 
         $data = $request->validate([
             'content' => 'required',
         ]);
 
-
         $discuss->update(['updated_at' => Carbon::now()]);
-
 
         Discuss::create([
             'title' => $discuss->title,
@@ -130,6 +139,10 @@ class DiscussController extends Controller
         $userReplied = auth()->user();
 
         $userOwnDisucss->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
+
+        if(!is_null($userMentioned)){
+            $userMentioned->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
+        }
 
         return back();
     }

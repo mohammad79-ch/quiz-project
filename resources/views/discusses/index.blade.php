@@ -80,7 +80,7 @@
                 My Best Answer
             </a>
 
-            <a href="{{route('discuss.create')}}?favorites=1" class="btn btn-primary btn-block mb-2">
+            <a href="{{route('discuss')}}?favorites=1" class="btn btn-primary btn-block mb-2">
                 Following
             </a>
 
