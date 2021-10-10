@@ -40,8 +40,11 @@ Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss.create');
 Route::get('discuss/{discuss}/cuurentDiscuss/{cuurentDiscuss}', [DiscussController::class,'bestAnswer'])->name('bestAnswer');
+Route::post('discuss/{discuss}/subscriptions', [DiscussController::class,'subscriptions'])->name('discuss.subscriptions');
+Route::delete('discuss/{discuss}/subscriptions', [DiscussController::class,'unSubscriptions'])->name('discuss.subscriptions.remove');
 Route::get('/article/{article}/edit', EditArticleComponent::class)->name('edit.article');
 Route::get('/article/add', AddArticleComponent::class)->name('add.article');
+
 });
 
 

@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(DiscussSubscriptions::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
