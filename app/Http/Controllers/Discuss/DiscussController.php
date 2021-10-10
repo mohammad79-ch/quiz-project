@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
 use App\Models\User;
+use App\Notifications\MentionOtherInRepliesDiscusses;
 use App\Notifications\sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -141,7 +142,7 @@ class DiscussController extends Controller
         $userOwnDisucss->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
 
         if(!is_null($userMentioned)){
-            $userMentioned->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
+            $userMentioned->notify(new MentionOtherInRepliesDiscusses($userReplied));
         }
 
         return back();

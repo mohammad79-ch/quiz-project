@@ -60,6 +60,16 @@ Route::get('/article/{article}', SingleArticleComponent::class)->name('single.ar
 
 
 Route::get('/log', function () {
+
+//    \App\Models\User::chunk(10,function ($users){
+//        $num = 1;
+//        echo "<div style='background:black;color:white;margin: 10px;border-radius: 10px'>";
+//       foreach ($users as $user) {
+//           echo $num . '-' . $user->name .'<hr>';
+//           $num++;
+//       }
+//       echo "</div>";
+//    });
     return \auth()->loginUsingId(29);
      auth()->logout();
 });
