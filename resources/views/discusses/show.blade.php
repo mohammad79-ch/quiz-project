@@ -28,7 +28,9 @@
     <meta name="msapplication-config" content="{{asset('img/favicon/browserconfig.xml')}}">
     <meta name="theme-color" content="#663fb5">
     <link rel="stylesheet" href="{{asset('css/landio.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+          integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
           integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -52,7 +54,7 @@
         <div><a href="{{route('profile',auth()->user()->profile)}}" class="text-white">Name
                 : {{auth()->user()->name}}</a></div>
 
-            <div>
+        <div>
             <a href="{{route('discuss')}}" class="text-white">Discuss</a>
             <a href="{{route('admin.dashboard')}}" class="text-white">Dashboard</a>
             <a href="{{route('articles')}}" class="font-weight-bold text-white">Articles</a>
@@ -76,12 +78,30 @@
                     >
 
                 </div>
-                <div class="mt-3"><h3>{{$discuss->title}}</h3></div>
+                <div class="mt-3">
+                    <h3>{{$discuss->title}}</h3>
+                </div>
             </div>
             <div class="col-md-12"
                  style="flex:1;margin-left: 10px;background: #9fcdff;padding:20px;border-radius: 10px ">
                 <div class="card-body d-flex justify-content-between">
-                    <p>{{$discuss->content}}</p>
+                    <p>{{$discuss->content}} </p>
+                    @auth
+
+                        @if(!count($is_subscriptions))
+                        <form action="{{route('discuss.subscriptions',$discuss)}}" method="post">
+                            @csrf
+                            <button style="background: none;outline: none" type="submit"><i class="far fa-bell" style="font-size: 20px"></i></button>
+                        </form>
+                        @else
+                        <form action="{{route('discuss.subscriptions.remove',$discuss)}}" method="post">
+                            @csrf
+                            @method("DELETE")
+                            <button style="background: none;outline: none" type="submit"><i class="fas fa-bell" style="font-size: 20px"></i></button>
+                        </form>
+                        @endif
+
+                    @endauth
                     @livewire('vote.vote-component',['discuss'=>$discuss])
 
                 </div>
@@ -131,7 +151,7 @@
                                 <p><a class="btn btn-success">bestAnswer</a></p>
                             @endif
                         @else
-                            <p>     <a
+                            <p><a
                                     href="{{route('bestAnswer',['discuss'=>$discuss,'cuurentDiscuss'=>$disChilds])}}"
                                     class="btn btn-secondary">
                                     BestAnswer

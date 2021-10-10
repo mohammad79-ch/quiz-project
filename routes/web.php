@@ -40,8 +40,11 @@ Route::group(['middleware'=>'auth'],function (){
 Route::post('@{profile}/image',UserStoryComponent::class)->name('user.images');
 Route::get('discuss/create', [DiscussController::class,'create'])->name('discuss.create');
 Route::get('discuss/{discuss}/cuurentDiscuss/{cuurentDiscuss}', [DiscussController::class,'bestAnswer'])->name('bestAnswer');
+Route::post('discuss/{discuss}/subscriptions', [DiscussController::class,'subscriptions'])->name('discuss.subscriptions');
+Route::delete('discuss/{discuss}/subscriptions', [DiscussController::class,'unSubscriptions'])->name('discuss.subscriptions.remove');
 Route::get('/article/{article}/edit', EditArticleComponent::class)->name('edit.article');
 Route::get('/article/add', AddArticleComponent::class)->name('add.article');
+
 });
 
 
@@ -60,6 +63,16 @@ Route::get('/article/{article}', SingleArticleComponent::class)->name('single.ar
 
 
 Route::get('/log', function () {
+
+//    \App\Models\User::chunk(10,function ($users){
+//        $num = 1;
+//        echo "<div style='background:black;color:white;margin: 10px;border-radius: 10px'>";
+//       foreach ($users as $user) {
+//           echo $num . '-' . $user->name .'<hr>';
+//           $num++;
+//       }
+//       echo "</div>";
+//    });
     return \auth()->loginUsingId(29);
      auth()->logout();
 });

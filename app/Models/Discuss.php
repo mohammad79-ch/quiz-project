@@ -58,5 +58,9 @@ class Discuss extends Model
         return $this->morphMany(Like::class,'likeable');
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(DiscussSubscriptions::class);
+    }
 
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Discuss;
 use App\Models\User;
+use App\Notifications\DiscussSubscriptions;
+use App\Notifications\MentionOtherInRepliesDiscusses;
 use App\Notifications\sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,8 +19,14 @@ use Morilog\Jalali\Jalalian;
 
 class DiscussController extends Controller
 {
+    public function user()
+    {
+        return auth()->user();
+    }
+
     public function index()
     {
+
         $discusses = Discuss::latest('updated_at')->where('parent_id', '0')->get();
 
         if (\request()->has('me')) {
@@ -29,27 +37,27 @@ class DiscussController extends Controller
             $discusses = $this->getBestAnswer();
         }
 
-         if (\request()->has('trending') && \request('trending') == "1") {
-             $discusses = $this->getMostRepliesInWeek();
-         }
+        if (\request()->has('trending') && \request('trending') == "1") {
+            $discusses = $this->getMostRepliesInWeek();
+        }
 
-         if(\request()->has('popular') && \request('popular') == "1"){
-             $discusses = $this->getMostRepliesAllTime();
-         }
+        if (\request()->has('popular') && \request('popular') == "1") {
+            $discusses = $this->getMostRepliesAllTime();
+        }
 
         if (\request()->has('filter_by') && \request('filter_by') == "contributed_to") {
             $discusses = $this->getMyContributed();
         }
 
-        if(\request()->has('answered') && \request('answered') == "1"){
+        if (\request()->has('answered') && \request('answered') == "1") {
             $discusses = $this->getSolved();
         }
 
-        if(\request()->has('answered') && \request('answered') == "0"){
+        if (\request()->has('answered') && \request('answered') == "0") {
             $discusses = $this->getUnsolved();
         }
 
-        if(\request()->has('fresh') && \request('fresh') == "1"){
+        if (\request()->has('fresh') && \request('fresh') == "1") {
             $discusses = $this->getNoRepliesSoFar();
         }
 
@@ -77,7 +85,12 @@ class DiscussController extends Controller
 
     function show(Discuss $discuss)
     {
-        return view('discusses.show', compact('discuss'));
+        $user = $this->user()->id;
+        $is_subscriptions = $discuss->subscriptions->filter(function ($item) use ($user) {
+            return $item->user_id == $user;
+        });
+
+        return view('discusses.show', compact('discuss', 'is_subscriptions'));
     }
 
     function store(Request $request)
@@ -111,14 +124,14 @@ class DiscussController extends Controller
     {
         $regex = '~(@\w+)~';
 
-        if (preg_match_all($regex,\request('content'), $matches)) {
-         $username = $matches;
+        if (preg_match_all($regex, \request('content'), $matches)) {
+            $username = $matches;
+            $findProfileUser = explode('@', $username[1][0]);
+
+            $userMentioned = User::where('profile', $findProfileUser[1])->first();
+            $userMentioned->notify(new MentionOtherInRepliesDiscusses($userReplied));
+
         }
-       $findProfileUser = explode('@',$username[1][0]);
-
-        $userMentioned = User::where('profile',$findProfileUser[1])->first();
-
-
 
         $userOwnDisucss = $discuss->user;
 
@@ -140,8 +153,10 @@ class DiscussController extends Controller
 
         $userOwnDisucss->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
 
-        if(!is_null($userMentioned)){
-            $userMentioned->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
+        foreach ($discuss->subscriptions as $subscription) {
+            if (isset($subscription)) {
+                $subscription->user->notify(new DiscussSubscriptions());
+            }
         }
 
         return back();
@@ -241,5 +256,23 @@ class DiscussController extends Controller
             ->where('parent_id', 0)
             ->get()->filter(fn($dis) => $dis->child_count == 0);
         return $discusses;
+    }
+
+    public function subscriptions(Discuss $discuss)
+    {
+        $discuss->subscriptions()->create([
+            'user_id' => $this->user()->id
+        ]);
+
+        return back();
+    }
+
+    public function unSubscriptions(Discuss $discuss)
+    {
+        $discuss->subscriptions()
+            ->where('user_id', $this->user()->id)
+            ->delete();
+
+        return back();
     }
 }
