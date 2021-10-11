@@ -29,7 +29,7 @@ class DiscussSubscriptions extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -56,7 +56,7 @@ class DiscussSubscriptions extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'message' => 'the discuss that you were followed has got a new replied'
         ];
     }
 }

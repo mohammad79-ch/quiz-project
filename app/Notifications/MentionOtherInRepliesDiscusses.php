@@ -32,7 +32,7 @@ class MentionOtherInRepliesDiscusses extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -59,7 +59,7 @@ class MentionOtherInRepliesDiscusses extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'message'=> "Something mentioned you "
         ];
     }
 }

@@ -76,7 +76,6 @@
                                     asset('images/defUser.png') :
                                      asset('images/icon/'.$discuss->user->image) }}" width="50"
                     >
-
                 </div>
                 <div class="mt-3">
                     <h3>{{$discuss->title}}</h3>
