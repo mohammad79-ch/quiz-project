@@ -77,6 +77,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="js/landio.min.js"></script>
 
+<script>
+    function copyToClipboard(text) {
+        const elem = document.createElement('textarea');
+        elem.value = text;
+        document.body.appendChild(elem);
+        elem.select();
+        document.execCommand('copy');
+        document.body.removeChild(elem);
+    }
+</script>
+
 
 </body>
 </html>

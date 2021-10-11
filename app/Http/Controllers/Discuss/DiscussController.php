@@ -15,6 +15,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Jorenvh\Share\Share;
 use Morilog\Jalali\Jalalian;
 
 class DiscussController extends Controller
@@ -85,6 +86,12 @@ class DiscussController extends Controller
 
     function show(Discuss $discuss)
     {
+        $media = \Share::page(url()->current(), 'Share title')
+            ->facebook()
+            ->twitter()
+            ->telegram()
+            ->linkedin()
+            ->whatsapp();
         $is_subscriptions = true;
 
         if (auth()->check()){
@@ -94,7 +101,7 @@ class DiscussController extends Controller
             });
         }
 
-        return view('discusses.show', compact('discuss', 'is_subscriptions'));
+        return view('discusses.show', compact('discuss', 'is_subscriptions','media'));
     }
 
     function store(Request $request)
