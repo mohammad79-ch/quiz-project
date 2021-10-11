@@ -43,10 +43,25 @@
 ================================================== -->
 
 <div class="d-flex justify-content-between" style="padding:50px ;padding:50px;display: flex;background: mediumpurple;">
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Notifications
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+            @foreach(auth()->user()->notifications as $notification)
+            <a class="dropdown-item" href="#">{{$notification->data['message']}}</a>
+            @endforeach
+
+        </div>
+    </div>
+
     @guest
         <div><a class="btn btn-success" href="{{route('register')}}">ورود / ثبت نام</a></div>
         <div><strong>مهمان</strong></div>
     @endguest
+
     @auth
         <div><a href="{{route('profile',auth()->user()->profile)}}" class="text-white">Name
                 : {{auth()->user()->name}}</a></div>

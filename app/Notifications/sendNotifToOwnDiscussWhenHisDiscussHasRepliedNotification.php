@@ -32,7 +32,7 @@ class sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification extends Notifica
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -59,7 +59,7 @@ class sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification extends Notifica
     public function toArray($notifiable)
     {
         return [
-            //
+            'message' => "has answer you and go check it"
         ];
     }
 }

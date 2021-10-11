@@ -85,10 +85,14 @@ class DiscussController extends Controller
 
     function show(Discuss $discuss)
     {
-        $user = $this->user()->id;
-        $is_subscriptions = $discuss->subscriptions->filter(function ($item) use ($user) {
-            return $item->user_id == $user;
-        });
+        $is_subscriptions = true;
+
+        if (auth()->check()){
+            $user = $this->user()->id;
+            $is_subscriptions = $discuss->subscriptions->filter(function ($item) use ($user) {
+                return $item->user_id == $user;
+            });
+        }
 
         return view('discusses.show', compact('discuss', 'is_subscriptions'));
     }
