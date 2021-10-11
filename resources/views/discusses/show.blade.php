@@ -69,6 +69,7 @@
             <a href="" class="btn btn-primary btn-block">Filters</a>
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
+            {!! $media !!}
             <div class="d-flex bg-light" style="margin-left: 10px !important">
                 <div class="m-2">
                     <img
