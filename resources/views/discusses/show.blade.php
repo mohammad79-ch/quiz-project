@@ -70,6 +70,8 @@
         </div>
         <div class="col-md-9" style="border-radius: 10px ">
             {!! $media !!}
+
+            <a d>{{url()->current()}}</a><a style="cursor: pointer" onclick="copyToClipboard('{{url()->current()}}')" class="btn btn-secondary btn-sm">copy</a>
             <div class="d-flex bg-light" style="margin-left: 10px !important">
                 <div class="m-2">
                     <img
@@ -186,5 +188,6 @@
         </div>
     </div>
 </div>
+
 
 @include('layouts.footer')
