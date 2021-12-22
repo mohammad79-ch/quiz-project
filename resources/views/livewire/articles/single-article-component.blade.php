@@ -7,7 +7,7 @@
             @foreach($relativeCollection as $rel)
             <div style="width: 100%;height: auto;border-radius:10px;border: 1px solid #ccc">
                 <div>
-                    <img src="{{asset('/storage/articles/'.$rel->image)}}" width="100%" height="50%" alt="">
+                    <img src="{{asset('/articles_image/articles/'.$rel->image)}}" width="100%" height="50%" alt="">
                 </div>
                 <div class="p-2">
                     <h3 style="font-size: 19px">{{$rel->title}}</h3>
@@ -30,7 +30,7 @@
             <div class="articles">
                 <div class="p-2">
                     <div class="article_image" style="width: 100%;">
-                        <img src="{{asset('storage/articles/'.$article->image)}}" class="rounded" width="100%" height="400px" alt="">
+                        <img src="{{asset('articles_image/articles/'.$article->image)}}" class="rounded" width="100%" height="400px" alt="">
                     </div>
                     <div class="article_section_details d-flex justify-content-between mt-2">
                         <div><h3 class="font-weight-bold"><a href="" class="text-dark">{{$article->title}}</a></h3>

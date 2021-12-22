@@ -135,6 +135,8 @@ class DiscussController extends Controller
     {
         $regex = '~(@\w+)~';
 
+        $userReplied = auth()->user();
+
         if (preg_match_all($regex, \request('content'), $matches)) {
             $username = $matches;
             $findProfileUser = explode('@', $username[1][0]);
@@ -160,7 +162,6 @@ class DiscussController extends Controller
             'parent_id' => $discuss->id
         ]);
 
-        $userReplied = auth()->user();
 
         $userOwnDisucss->notify(new sendNotifToOwnDiscussWhenHisDiscussHasRepliedNotification($userReplied));
 
