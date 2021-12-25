@@ -75,6 +75,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/regular.min.js" integrity="sha512-4D8biBgqIYSc9UhQlbLb/Mdoajfr6qz5AoWh9NQ1HPryiS415RIh6ErgtavB711Se9DMStLY1KYGvn4lpgIcTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/landio.min.js"></script>
 
 <script>

@@ -30,9 +30,13 @@ return [
 
     'disks' => [
 
+//        'local' => [
+//            'driver' => 'local',
+//            'root' => storage_path('app'),
+//        ],
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path('articles_image'),
         ],
 
         'photos' => [
@@ -47,7 +51,7 @@ return [
 
         'articles' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path('articles'),
         ],
 
         'public' => [

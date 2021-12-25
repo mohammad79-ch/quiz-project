@@ -43,15 +43,16 @@
 
 <div class="d-flex justify-content-between" style="padding:50px ;padding:50px;display: flex;background: mediumpurple;">
 
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
+    @auth
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
+
+            @foreach(auth()->user()->notifications as $notification)
+                <a class="dropdown-item" href="#">{{$notification->data['message']}}</a>
+            @endforeach
+
+
         </div>
-    </div>
+    @endauth
 
 @guest
         <div><a class="btn btn-success" href="{{route('register')}}">ورود / ثبت نام</a></div>
