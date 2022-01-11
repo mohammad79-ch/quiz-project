@@ -27,7 +27,7 @@ class MakeStoryForUser extends Component
 
         $name = md5($this->photo . microtime()).'.'.$this->photo->extension();
 
-        $this->photo->storeAs('public/photos',$name);
+        $this->photo->storeAs('photos',$name);
 
         $this->createImageStory($name);
 

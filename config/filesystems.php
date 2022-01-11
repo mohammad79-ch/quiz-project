@@ -41,7 +41,7 @@ return [
 
         'photos' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => public_path('story'),
         ],
 
         'images' => [

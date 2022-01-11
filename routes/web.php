@@ -17,6 +17,7 @@ use App\Http\Livewire\ProfileComponent;
 use App\Http\Livewire\UserStoryComponent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,3 +109,17 @@ Route::post('file',function (){
     dd('done');
 
 })->name('file');
+
+Route::post("jwt/register",[\App\Http\Controllers\AuthJwtController::class,"register"]);
+Route::post("jwt/login",[\App\Http\Controllers\AuthJwtController::class,"authenticate"]);
+
+Route::group(["middleware"=>"jwt.verify"],function (){
+    Route::get("user",function (){
+        dd(JWTAuth::parseToken()->authenticate());
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
+
+        return response()->json(compact('user'));
+    });
+});

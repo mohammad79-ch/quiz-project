@@ -3,7 +3,7 @@
         <div class="d-flex mt-3 flex-wrap">
             @foreach($images as $image)
                 <div class="ml-2" style="margin-left: 5px">
-                    <img src="{{asset('storage/photos/'.$image->url)}}" width="50"
+                    <img src="{{asset('articles_image/photos/'.$image->url)}}" width="50"
                          class="rounded-circle border" alt="">
                     <p style="font-size: 14px" class="font-weight-bold">
                         <a
